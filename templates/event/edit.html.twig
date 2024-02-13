@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Event{% endblock %}
+
+{% block body %}
+    <h1>Edit Event</h1>
+
+    {{ include('event/_form.html.twig', {'button_label': 'Update'}) }}
+  
+    <!-- Ajout d'un espace vertical entre le formulaire et le bouton -->
+    <div style="margin-top: 20px; text-align: center;">
+        <button onclick="window.location.href='{{ path('app_event_new') }}'" class="btn custom-green">Back to list</button>
+    </div>
+{% endblock %}

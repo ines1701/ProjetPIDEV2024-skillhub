@@ -1,0 +1,91 @@
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.table th {
+    background-color: #f2f2f2;
+}
+
+/* Style pour les boutons */
+.btn-group {
+    display: inline-block;
+}
+
+.btn-group form {
+    margin-right: 5px; /* Espace entre les boutons */
+}
+
+/* Style pour le bouton "Create new" */
+.btn-create-new {
+    margin-top: 10px; /* Espacement depuis le tableau */
+}
+
+/* Style pour le bouton "Edit" */
+.btn-edit {
+    background-color: #007bff; /* Bleu */
+    color: #fff; /* Texte blanc */
+}
+
+/* Style pour le bouton "Delete" */
+.btn-delete {
+    background-color: #dc3545; /* Rouge */
+    color: #fff; /* Texte blanc */
+}
+
+/* Style pour le bouton "Create" */
+.btn-create {
+    background-color: #28a745; /* Vert */
+    color: #fff; /* Texte blanc */
+}
+
+h1 {
+    color: #27588C; /* Bleu */
+    text-align: center; /* Centrer le texte */
+}
+
+/* styles.css */
+
+.my-form-class {
+    /* Ajoutez vos styles personnalisés pour le formulaire ici */
+    /* Par exemple, vous pouvez définir la largeur, la couleur de fond, les marges, etc. */
+    width: 300px;
+    margin: auto; /* Centre le formulaire horizontalement */
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+
+/* Styles pour les éléments du formulaire */
+.my-form-class input[type="text"],
+.my-form-class textarea {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    box-sizing: border-box;
+}
+
+/* Styles pour le bouton */
+.my-form-class button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.my-form-class button:hover {
+    background-color: #0056b3;
+}
+
+/* Ajoutez d'autres styles personnalisés selon vos besoins */
+
+.custom-green {
+    background-color: #28a745; /* Vert */
+    color: white;
+}

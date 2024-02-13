@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}LISTE DES EVENEMENTS{% endblock %}
+
+{% block body %}
+    <h1>LISTE DES EVENEMENTS</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Titre</th>
+                <th>Describ</th>
+                <th>Lieu</th>
+                <th>Date</th>
+                <th>Image</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for event in events %}
+            <tr>
+                <td>{{ event.id }}</td>
+                <td>{{ event.titre }}</td>
+                <td>{{ event.describ }}</td>
+                <td>{{ event.lieu }}</td>
+                <td>{{ event.date ? event.date|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ event.image }}</td>
+                      <td>
+                    <div class="btn-group" role="group" aria-label="Actions">
+                        <form method="post" action="{{ path('app_event_edit', {'id': event.id}) }}" style="display: inline;">
+                           <button type="submit" class="btn btn-primary btn-edit">Edit</button>
+                        </form>
+                        {% include 'event/_delete_form.html.twig' with { 'id': event.id } %}
+                    </div>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    
+{% endblock %}
