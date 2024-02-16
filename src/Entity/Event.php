@@ -5,6 +5,9 @@ namespace App\Entity;
 use App\Repository\EventRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 
 #[ORM\Entity(repositoryClass: EventRepository::class)]
 class Event
@@ -14,7 +17,12 @@ class Event
     #[ORM\Column]
     private ?int $id = null;
 
+
+       /**
+     * @Assert\NotBlank(message="Le titre ne peut pas être vide.")
+     */
     #[ORM\Column(length: 255)]
+  
     private ?string $titre = null;
 
     #[ORM\Column(length: 255)]
@@ -28,6 +36,27 @@ class Event
 
     #[ORM\Column(length: 255)]
     private ?string $image = null;
+
+/**
+     * @var UploadedFile|null
+     */
+    private $imageFile;
+
+
+
+    #[ORM\ManyToOne(inversedBy: 'events')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?TypeEvent $type = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $latitude = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $longitude = null;
+
+
+
+
 
     public function getId(): ?int
     {
@@ -93,4 +122,62 @@ class Event
 
         return $this;
     }
+
+    public function getImageFile(): ?UploadedFile
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageFile(?UploadedFile $imageFile): self
+    {
+        $this->imageFile = $imageFile;
+
+        return $this;
+    }
+
+
+
+    public function getType(): ?TypeEvent
+    {
+        return $this->type;
+    }
+
+    public function setType(?TypeEvent $type): static
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    public function getLatitude(): ?string
+    {
+        return $this->latitude;
+    }
+
+    public function setLatitude(string $latitude): static
+    {
+        $this->latitude = $latitude;
+
+        return $this;
+    }
+
+    public function getLongitude(): ?string
+    {
+        return $this->longitude;
+    }
+
+    public function setLongitude(string $longitude): static
+    {
+        $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    public function __toString(){
+
+        return $this->Latitude;
+        return $this->Longitude;
+    }
+
+    
 }

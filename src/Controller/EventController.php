@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controller;
-
+use Knp\Component\Pager\PaginatorInterface;
 use App\Entity\Event;
 use App\Form\EventType;
 use App\Repository\EventRepository;
@@ -17,25 +17,46 @@ class EventController extends AbstractController
     #[Route('/', name: 'app_event_index', methods: ['GET'])]
     public function index(EventRepository $eventRepository): Response
     {
-        return $this->render('event/index.html.twig', [
+
+        
+        return $this->render('eventFront/front_event.html.twig', [
             'events' => $eventRepository->findAll(),
         ]);
     }
 
     #[Route('/new', name: 'app_event_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager,EventRepository $eventRepository): Response
+    public function new(Request $request, EntityManagerInterface $entityManager,EventRepository $eventRepository, PaginatorInterface $paginator): Response
     {
         $event = new Event();
         $form = $this->createForm(EventType::class, $event);
         $form->handleRequest($request);
 
+
+
+        
         if ($form->isSubmitted() && $form->isValid()) {
+
+ 
+
+// Traitement de l'image
+$imageFile = $form->get('imageFile')->getData();
+if ($imageFile) {
+    $imageName = md5(uniqid()).'.'.$imageFile->guessExtension();
+    $imageFile->move(
+        $this->getParameter('image_directory'),
+        $imageName
+    );
+    $event->setImage($imageName);
+}
+
+
             $entityManager->persist($event);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_event_new', [], Response::HTTP_SEE_OTHER);
         }
 
+    
         return $this->renderForm('event/new.html.twig', [
             'events' => $eventRepository->findAll(),
             'event' => $event,
@@ -70,6 +91,8 @@ class EventController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_event_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_event_new', [], Response::HTTP_SEE_OTHER);
     }
+
+
 }

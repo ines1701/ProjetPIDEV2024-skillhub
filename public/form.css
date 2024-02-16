@@ -89,3 +89,64 @@ h1 {
     background-color: #28a745; /* Vert */
     color: white;
 }
+
+.invalid-feedback {
+    color: red;
+    font-size: 14px;
+}
+
+.describ-textarea {
+    width: 100%;
+    height: 200px; /* ou tout autre taille souhaitée */
+    resize: vertical; /* permettre le redimensionnement vertical */
+}
+
+
+
+
+
+
+
+
+.event-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.event-box {
+    width: calc(33.33% - 20px); /* 33.33% moins un espacement de 20px pour chaque boîte */
+    margin: 10px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.event-box h2 {
+    margin-top: 0;
+}
+
+.event-box p {
+    margin-bottom: 10px;
+}
+
+.event-box img {
+    max-width: 100%;
+    height: auto;
+}
+
+
+.event-group {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.event-box {
+    background-color: #f8f8f8;
+   
+    padding: 10px;
+    width: calc(33.33% - 20px);
+    box-sizing: border-box;
+    position: relative;
+}

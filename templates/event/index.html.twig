@@ -2,8 +2,10 @@
 
 {% block title %}LISTE DES EVENEMENTS{% endblock %}
 
+
 {% block body %}
     <h1>LISTE DES EVENEMENTS</h1>
+    
 
     <table class="table">
         <thead>
@@ -14,6 +16,7 @@
                 <th>Lieu</th>
                 <th>Date</th>
                 <th>Image</th>
+                <th>type</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -24,14 +27,26 @@
                 <td>{{ event.titre }}</td>
                 <td>{{ event.describ }}</td>
                 <td>{{ event.lieu }}</td>
+                
                 <td>{{ event.date ? event.date|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ event.image }}</td>
+                                 <td>
+                    {% if event.image %}
+                        <img src="{{ asset('images/affiche/' ~ event.image) }}" alt="Event Image" style="max-width: 100px;">
+                    {% else %}
+                        No Image
+                    {% endif %}
+                </td>
+
+
+                 <td>{{ event.type }}</td>
+
+
                       <td>
                     <div class="btn-group" role="group" aria-label="Actions">
                         <form method="post" action="{{ path('app_event_edit', {'id': event.id}) }}" style="display: inline;">
                            <button type="submit" class="btn btn-primary btn-edit">Edit</button>
                         </form>
-                        {% include 'event/_delete_form.html.twig' with { 'id': event.id } %}
+                        {% include 'event/_delete_form.html.twig' with { 'id': event.id }  %}
                     </div>
             </tr>
         {% else %}
@@ -39,8 +54,8 @@
                 <td colspan="7">no records found</td>
             </tr>
         {% endfor %}
+        
         </tbody>
     </table>
-
-    
+  
 {% endblock %}
