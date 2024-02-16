@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Details</title>
+    <style>
+        
+.ressource-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.ressource-box {
+  background-color: #f8f8f8;
+  border: 5px solid #9f9f9f;
+  border-radius: 10px;
+  padding: 10px;
+  width: calc(70% - 20px);
+  box-sizing: border-box;
+  position: relative;
+  margin: 20px 0; /* Ajouter une marge de 10 pixels en haut et en bas */
+}
+ .edit-link {
+            position: absolute;
+            bottom: 30px;
+            right: 10px;
+        }
+          .delete-link {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+        }
+          .add-button {
+            position: absolute;
+            top: 180px;
+            right: 300px;
+        }
+         .add-buttonfront {
+            position: absolute;
+            top: 150px;
+            right: 300px;
+        }
+     
+
+         
+    </style>
+</head>
+<body>
+
+<div style="text-align: center; padding: 40px;">
+    <h1>Les formations disponibles</h1>
+  <a href="{{ path('app_Addr') }}" class="add-button">Ajouter</a>
+  <a href="{{ path('app_AfficherFront') }}" class="add-buttonfront">consulter la partie front</a>
+</div>
+
+<div style="text-align: center; padding: 40px;">
+    {% set groupSize = 3 %}
+    {% for i in 0..(ressource|length-1)//groupSize %}
+        <div class="ressource-group">
+            {% for j in 0..groupSize-1 %}
+                {% set index = i * groupSize + j %}
+                {% if index < ressource|length %}
+                    <div class="ressource-box">
+                    
+                        <h1>{{ ressource[index].titre }}</h1>
+       <video controls width="50%">
+  <source src="{{asset('uploads/'~ ressource[index].file)}}" type="video/mp4">
+</video>              <p style="font-size: 25px ;">{{ressource[index].description }}</p>
+                       <a href="{{ path('app_editr', {'id': ressource[index].id}) }}" class="edit-link">modifier</a>
+                       <a href="{{ path('app_deleter', {'id': ressource[index].id}) }}" class="delete-link">supprimer</a>
+ 
+                       
+                       
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endfor %}
+</div>
+</body>
+</html>
