@@ -1,0 +1,33 @@
+<style>
+    .center-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+     
+        flex-direction: column;
+    }
+</style>
+
+<div class="center-container">
+    <h1 style="text-align: center;">Ressources pour la formation : {{ formation.titre }}</h1>
+ 
+ <a href="{{ path('app_AfficheFront') }}" class="add-button">retour à la page formation </a>
+
+    {% if ressources is not empty %}
+        <ul>
+            {% for ressource in ressources %}
+                <li>
+                    <h2>{{ ressource.titre }}</h2>
+                    <video controls width="50%">
+                        <source src="{{ asset('uploads/' ~ ressource.file) }}" type="video/mp4">
+                    </video>
+                    <p style="font-size: 25px;">{{ ressource.description }}</p>
+
+                  
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Aucune ressource disponible pour cette formation.</p>
+    {% endif %}
+</div>

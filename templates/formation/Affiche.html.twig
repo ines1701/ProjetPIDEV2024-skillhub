@@ -34,10 +34,7 @@
             bottom: 10px;
             right: 10px;
         }
-         .formation-image {
-            display: block;
-            margin-bottom: 10px;
-        }
+         
            .add-button {
             position: absolute;
             top: 150px;
@@ -64,13 +61,15 @@
                 {% set index = i * groupSize + j %}
                 {% if index < formation|length %}
                     <div class="formation-box">
-                    <img src="{{ ('image/formation.avif') }}" alt="Formation Image" class="formation-image" style="display: block; margin: 0 auto; max-width: 200px; height: auto;">
+                    
                         <h2>{{ formation[index].titre }}</h2>
                         <p style="font-size: 25px;">{{ formation[index].categorie }}</p>
                         <p style="font-size: 18px;">{{ formation[index].tuteur }}</p>
                         <p>posté le {{ formation[index].updated }}</p>
+                        <a href="{{ path('formation_ressources', { 'id': formation[index].id }) }}">Ouvrir</a>
                         <a href="{{ path('app_edit', {'id': formation[index].id}) }}" class="edit-link">modifier</a>
-                        <a href="{{ path('app_delete', {'id': formation[index].id}) }}" class="delete-link">supprimer</a>
+                    <a href="{{ path('app_delete', {'id': formation[index].id}) }}" class="delete-link">supprimer</a>
+
                     </div>
                 {% endif %}
             {% endfor %}

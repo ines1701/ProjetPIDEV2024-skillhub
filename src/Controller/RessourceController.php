@@ -70,7 +70,12 @@ class RessourceController extends AbstractController
             }
             $em->persist($ressource);
             $em->flush();
-            return $this->redirectToRoute('app_Afficher');
+
+
+            $formationId = $ressource->getFormation()->getId();
+
+
+             return $this->redirectToRoute("formation_ressources", ['id' => $formationId]);
         }
 
         return $this->render('ressource/Add.html.twig', [
@@ -90,7 +95,11 @@ class RessourceController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
            
             $em->flush(); // Correction : Utilisez la méthode flush() sur l'EntityManager pour enregistrer les modifications en base de données.
-            return $this->redirectToRoute("app_Afficher");
+            $formationId = $ressource->getFormation()->getId();
+
+
+             return $this->redirectToRoute("formation_ressources", ['id' => $formationId]);
+        
         }
         return $this->render('ressource/edit.html.twig', [
             'f' => $form->createView(),
@@ -100,9 +109,16 @@ class RessourceController extends AbstractController
 public function delete($id, RessourceRepository $repository,EntityManagerInterface $em)
 {
     $ressource = $repository->find($id);
+    
+    if (!$ressource) {
+        throw $this->createNotFoundException('Ressource non trouvée.');
+    }
     $em->remove($ressource);
     $em->flush();
-    return $this->redirectToRoute('app_Afficher');
+    $formationId = $ressource->getFormation()->getId();
+
+
+             return $this->redirectToRoute("formation_ressources", ['id' => $formationId]);
 }
 
 #[Route('/AfficherFront', name: 'app_AfficherFront')]
@@ -113,6 +129,7 @@ public function AfficherFront (RessourceRepository $repository)
         $ressource=$repository->findAll() ; //select *
         return $this->render('ressource/AfficheFront.html.twig',['ressource'=>$ressource]);
     }
+  
 
 
 

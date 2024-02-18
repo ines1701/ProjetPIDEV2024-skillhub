@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\FormationRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -20,36 +22,44 @@ class Formation
 
     #[ORM\Column(length: 255)]
     /**
-     * @Assert\NotBlank(message="Le titre ne peut pas etre vide.")
+     * @Assert\NotBlank(message="- Le titre ne peut pas etre vide.")
      * @Assert\Length(
      *          min = 4,
-     *          minMessage = "Le titre doit avoir minimum 4 caractères."
+     *          minMessage = "- Le titre doit avoir minimum 4 caractères."
      * )
      */
     private ?string $titre = null;
 
     #[ORM\Column(length: 255)]
      /**
-     * @Assert\NotBlank(message="categorie ne peut pas etre vide.")
+     * @Assert\NotBlank(message="- categorie ne peut pas etre vide.")
      * @Assert\Length(
      *          min = 4,
-     *          minMessage = "categorie doit avoir minimum 4 caractères."
+     *          minMessage = "- categorie doit avoir minimum 4 caractères."
      * )
      */
     private ?string $categorie = null;
 
     #[ORM\Column(length: 255)]
      /**
-     * @Assert\NotBlank(message="tuteur ne peut pas etre vide.")
+     * @Assert\NotBlank(message="- tuteur ne peut pas etre vide.")
      * @Assert\Length(
      *          min = 4,
-     *          minMessage = "tuteur doit avoir minimum 4 caractères."
+     *          minMessage = "- tuteur doit avoir minimum 4 caractères."
      * )
      */
     private ?string $tuteur = null;
 
     #[ORM\Column(length: 255)]
     private ?string $updated = null;
+
+    #[ORM\OneToMany(targetEntity: Ressource::class, mappedBy: 'formation')]
+    private Collection $ressources;
+
+    public function __construct()
+    {
+        $this->ressources = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -102,5 +112,39 @@ class Formation
         $this->updated = $updated;
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Ressource>
+     */
+    public function getRessources(): Collection
+    {
+        return $this->ressources;
+    }
+
+    public function addRessource(Ressource $ressource): static
+    {
+        if (!$this->ressources->contains($ressource)) {
+            $this->ressources->add($ressource);
+            $ressource->setFormation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRessource(Ressource $ressource): static
+    {
+        if ($this->ressources->removeElement($ressource)) {
+            // set the owning side to null (unless already changed)
+            if ($ressource->getFormation() === $this) {
+                $ressource->setFormation(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString(){
+        return $this->ressources;
     }
 }

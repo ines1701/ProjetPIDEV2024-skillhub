@@ -72,6 +72,7 @@
        <video controls width="50%">
   <source src="{{asset('uploads/'~ ressource[index].file)}}" type="video/mp4">
 </video>              <p style="font-size: 25px ;">{{ressource[index].description }}</p>
+                      
                        <a href="{{ path('app_editr', {'id': ressource[index].id}) }}" class="edit-link">modifier</a>
                        <a href="{{ path('app_deleter', {'id': ressource[index].id}) }}" class="delete-link">supprimer</a>
  

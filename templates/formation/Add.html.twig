@@ -6,22 +6,22 @@
         {{ form_widget(f.titre,{'attr':{'class':'form-control'}}) }}
     <br/>{{ form_errors(f.titre,{'attr':{'class':'text-danger'}}) }}
     <br/>
+
     <label for="inputText">Categorie</label>
-    <div class="col-sm-10">
         {{ form_widget(f.categorie,{'attr':{'class':'form-control'}}) }}
-      </div>
-    {{ form_errors(f.categorie,{'attr':{'class':'text-danger'}}) }}
+   <br/> {{ form_errors(f.categorie,{'attr':{'class':'text-danger'}}) }}
     <br/>
+
     <label for="inputText">Tuteur</label>
-    <div class="col-sm-10">
-       <br/> {{ form_widget(f.tuteur,{'attr':{'class':'form-control'}}) }}
-      </div>
-    {{ form_errors(f.tuteur,{'attr':{'class':'text-danger'}}) }}
+        {{ form_widget(f.tuteur,{'attr':{'class':'form-control'}}) }}
+    <br/>{{ form_errors(f.tuteur,{'attr':{'class':'text-danger'}}) }}
+     <br/>
+
+    <label for="inputText">posté le</label>
+        {{ form_widget(f.updated,{'attr':{'class':'form-control'}}) }}
+   <br/> {{ form_errors(f.updated,{'attr':{'class':'text-danger'}}) }}
     {{ form_end(f) }}
-<input type="file" id="pdf" name="pdf" accept=".pdf">
-<label for="video">Vidéo :</label>
-<input type="file" id="video" name="video" accept="video/*">
-    <label for="fichier">Fichier :</label>
-    <input type="file" id="fichier" name="fichier" accept="image/*,video/*,.pdf" required><br>
+    
+
     
  

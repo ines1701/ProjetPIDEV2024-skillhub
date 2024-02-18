@@ -52,6 +52,7 @@
                         <p style="font-size: 25px;">{{ formation[index].categorie }}</p>
                         <p style="font-size: 18px;">{{ formation[index].tuteur }}</p>
                         <p>posté le {{ formation[index].updated }}</p>
+                        <a href="{{ path('formationFront_ressources', { 'id': formation[index].id }) }}">Ouvrir</a>
                        
                         
                     </div>

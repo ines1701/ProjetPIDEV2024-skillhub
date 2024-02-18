@@ -1,8 +1,15 @@
-<h1>add formation</h1>
+<h1>Ajouter des ressources pour la formation </h1>
 {{ form_start(form,{attr:{novalidate:'novalidate'}}) }}
     {# ... #}
 
-    {{ form_row(form.titre) }}
-    {{ form_row(form.description) }}
+     <label for="inputText">Le titre de votre fichier</label>
+        {{ form_widget(form.titre,{'attr':{'class':'form-control'}}) }}
+    <br/>{{ form_errors(form.titre,{'attr':{'class':'text-danger'}}) }}
+    <br/>
+     <label for="inputText">Description du fichier</label>
+        {{ form_widget(form.description,{'attr':{'class':'form-control'}}) }}
+    <br/>{{ form_errors(form.description,{'attr':{'class':'text-danger'}}) }}
+    <br/>
     {{ form_row(form.file) }}
+    <br/>
 {{ form_end(form) }}

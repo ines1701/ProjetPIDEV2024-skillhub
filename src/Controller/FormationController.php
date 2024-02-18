@@ -3,8 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Formation;
+use App\Entity\Ressource;
 use App\Form\FormformationType;
 use App\Repository\FormationRepository;
+
+use App\Repository\RessourceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -88,6 +91,59 @@ public function AfficheFront (FormationRepository $repository)
         $formation=$repository->findAll() ; //select *
         return $this->render('formation/AfficheFront.html.twig',['formation'=>$formation]);
     }
+    #[Route('/formation/{id}/ressources', name: 'formation_ressources')]
+
+
+    public function formationRessources($id, EntityManagerInterface $entityManager)
+    {
+        // Récupérer l'objet Formation correspondant à l'ID
+        $formation = $entityManager->getRepository(Formation::class)->find($id);
+
+        // Vérifier si la formation existe
+        if (!$formation) {
+            throw $this->createNotFoundException('Formation non trouvée.');
+        }
+
+        // Récupérer les ressources associées à la formation
+        $ressources = $formation->getRessources();
+
+        // Afficher la vue avec les ressources
+        return $this->render('formation/ressources.html.twig', [
+            'formation' => $formation,
+            'ressources' => $ressources,
+        ]);
+
+    }
+
+    #[Route('/formationFront/{id}/ressources', name: 'formationFront_ressources')]
+
+
+    public function formationRessourcesFront($id, EntityManagerInterface $entityManager)
+    {
+        // Récupérer l'objet Formation correspondant à l'ID
+        $formation = $entityManager->getRepository(Formation::class)->find($id);
+
+        // Vérifier si la formation existe
+        if (!$formation) {
+            throw $this->createNotFoundException('Formation non trouvée.');
+        }
+
+        // Récupérer les ressources associées à la formation
+        $ressources = $formation->getRessources();
+
+        // Afficher la vue avec les ressources
+        return $this->render('formation/ressourcesFront.html.twig', [
+            'formation' => $formation,
+            'ressources' => $ressources,
+        ]);
+    }
+
+
+
+
+
+
+
 
 
 

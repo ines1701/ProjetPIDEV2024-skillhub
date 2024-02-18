@@ -3,9 +3,14 @@
 namespace App\Form;
 
 use App\Entity\Formation;
+use App\Entity\Ressource;
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Validator\Constraints\Regex;
+
 
 class FormformationType extends AbstractType
 {
@@ -15,7 +20,14 @@ class FormformationType extends AbstractType
             ->add('titre')
             ->add('categorie')
             ->add('tuteur')
-            ->add('updated')
+            ->add('updated', null, [
+                'constraints' => [
+                    new Regex([
+                        'pattern' => '/^\d{2}\/\d{2}\/\d{4}$/',
+                        'message' => '- Le format de la date doit être jj/mm/aaaa',
+                    ]),
+                ],
+            ])
         ;
     }
 
