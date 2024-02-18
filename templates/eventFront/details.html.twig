@@ -1,0 +1,39 @@
+{# event_details.twig #}
+
+
+{% block body %}
+ 
+<div class="background">
+
+
+
+    <div style="text-align: center; padding: 40px;">
+        <h1 >Détails de l'événement</h1>
+    </div>
+
+    <div style="text-align: center;">
+        <h2>{{ event.titre }}</h2>
+        
+              <video controls style="max-width: 80%;">
+            <source src="{{ asset('/images/affiche/' ~ event.video) }}" type="video/mp4">
+        </video>
+
+
+        <p>{{ event.describ }}</p>
+        <p>Lieu: {{ event.lieu }}</p>
+        <p>Date: {{ event.date ? event.date|date('Y-m-d H:i:s') : '' }}</p>
+        <p>Type: {{ event.type }}</p>
+
+                <div id="map"></div>
+
+        
+         <button onclick="window.location.href='{{ path('app_event_index') }}'" class="btn custom-green">retour</button>
+    
+    </div>
+</div>
+
+
+
+  
+
+{% endblock %}

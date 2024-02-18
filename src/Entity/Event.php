@@ -43,18 +43,13 @@ class Event
     private $imageFile;
 
 
+    #[ORM\Column(length: 255)]
+    private ?string $video = null;
+
 
     #[ORM\ManyToOne(inversedBy: 'events')]
     #[ORM\JoinColumn(nullable: false)]
     private ?TypeEvent $type = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $latitude = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $longitude = null;
-
-
 
 
 
@@ -149,34 +144,16 @@ class Event
         return $this;
     }
 
-    public function getLatitude(): ?string
+    public function getVideo(): ?string
     {
-        return $this->latitude;
+        return $this->video;
     }
 
-    public function setLatitude(string $latitude): static
+    public function setVideo(string $video): static
     {
-        $this->latitude = $latitude;
+        $this->video = $video;
 
         return $this;
-    }
-
-    public function getLongitude(): ?string
-    {
-        return $this->longitude;
-    }
-
-    public function setLongitude(string $longitude): static
-    {
-        $this->longitude = $longitude;
-
-        return $this;
-    }
-
-    public function __toString(){
-
-        return $this->Latitude;
-        return $this->Longitude;
     }
 
     

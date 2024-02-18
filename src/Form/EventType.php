@@ -19,19 +19,25 @@ class EventType extends AbstractType
             ->add('describ', TextareaType::class, [
                 'attr' => ['class' => 'describ-textarea', 'rows' => 5], // Classe CSS et nombre de lignes
             ])
-
             ->add('lieu')
-            
             ->add('date')
             ->add('imageFile', FileType::class, [
                 'label' => 'Image (JPEG, PNG)',
                 'mapped' => false,
                 'required' => false,
             ])
+            ->add('video', FileType::class, [
+                'label' => 'Vidéo (MP4)',
+                'mapped' => false, // Le champ vidéo ne correspond pas à un champ de l'entité, il sera géré manuellement
+                'required' => false, // Permet à l'utilisateur de ne pas télécharger une nouvelle vidéo
+            ])
+
             ->add('type', EntityType::class, [
                 'class' => TypeEvent::class,
                 'choice_label' => 'label',
             ]);
+            
+           
     
         
     }

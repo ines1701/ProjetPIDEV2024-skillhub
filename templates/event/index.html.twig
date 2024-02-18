@@ -1,9 +1,10 @@
-{% extends 'base.html.twig' %}
+
 
 {% block title %}LISTE DES EVENEMENTS{% endblock %}
 
 
 {% block body %}
+ 
     <h1>LISTE DES EVENEMENTS</h1>
     
 
@@ -16,7 +17,9 @@
                 <th>Lieu</th>
                 <th>Date</th>
                 <th>Image</th>
+                 <th>Vidéo</th>
                 <th>type</th>
+              
                 <th>actions</th>
             </tr>
         </thead>
@@ -27,7 +30,6 @@
                 <td>{{ event.titre }}</td>
                 <td>{{ event.describ }}</td>
                 <td>{{ event.lieu }}</td>
-                
                 <td>{{ event.date ? event.date|date('Y-m-d H:i:s') : '' }}</td>
                                  <td>
                     {% if event.image %}
@@ -38,7 +40,22 @@
                 </td>
 
 
+               <td> {# Affichage de la vidéo #}
+                    {% if event.video %}
+                        <video controls style="max-width: 100px;">
+                            <source src="{{ asset('images/affiche/' ~ event.video) }}" type="video/mp4">
+                            <!-- Ajoutez d'autres formats vidéo pris en charge si nécessaire -->
+                        </video>
+                    {% else %}
+                        No Video
+                    {% endif %}
+                </td>
+
+
+ 
+
                  <td>{{ event.type }}</td>
+              
 
 
                       <td>
@@ -54,8 +71,7 @@
                 <td colspan="7">no records found</td>
             </tr>
         {% endfor %}
-        
         </tbody>
     </table>
-  
+
 {% endblock %}

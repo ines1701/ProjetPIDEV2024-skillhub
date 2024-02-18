@@ -1,0 +1,22 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #e8e7e7; /* Remplacez cette couleur par celle de votre choix */
+}
+
+.text-with-light {
+    font-size: 48px;
+    font-weight: bold;
+    color: #ffffff; /* Couleur du texte */
+    text-shadow: 0 0 10px rgba(163, 117, 117, 0.7); /* Ombre portée avec une couleur blanche semi-transparente */
+    animation: glowText 2s ease-in-out infinite alternate; /* Animation pour l'effet de lumière */
+}
+
+@keyframes glowText {
+    0% {
+        text-shadow: 0 0 10px rgba(187, 146, 146, 0.7); /* Ombre portée initiale */
+    }
+    100% {
+        text-shadow: 0 0 20px rgba(192, 165, 165, 0.9); /* Ombre portée plus prononcée */
+    }
+}

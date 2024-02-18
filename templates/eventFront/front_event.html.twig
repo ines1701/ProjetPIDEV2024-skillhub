@@ -1,16 +1,14 @@
-{% extends 'base.html.twig' %}
+{# main_template.twig #}
+
 
 {% block stylesheets %}
-    {{ parent() }}
+   
     <link rel="stylesheet" href="{{ asset('/form.css') }}">
 {% endblock %}
 
-{% block title %}LISTE DES EVENEMENTS{% endblock %}
+
 
 {% block body %}
-
-
-
     <div style="text-align: center; padding: 40px;">
         <h1>Les événements disponibles</h1>
     </div>
@@ -23,23 +21,18 @@
                     {% if index < events|length %}
                         <div class="event-box">
                             <img src="{{ asset('images/affiche/' ~ events[index].image) }}" alt="Event Image" class="event-image" style="display: block; margin: 0 auto; max-width: 400px; height: auto;">
-                           <h2 style="font-size: 35px; font-weight: bold; color: #333;">{{ events[index].titre }}</h2>
-                            
-                              
-
+                            <h2 style="font-size: 35px; font-weight: bold; color: #333;">{{ events[index].titre }}</h2>
                             <p style="font-size: 25px;">{{ events[index].describ }}</p>
                             <p style="font-size: 18px;">Lieu: {{ events[index].lieu }}</p>
                             <p>Date: {{ events[index].date ? events[index].date|date('Y-m-d H:i:s') : '' }}</p>
-                             <p style="font-size: 18px;">type: {{ events[index].type }}</p>
+                            <p style="font-size: 18px;">Type: {{ events[index].type }}</p>
+                       
+                             <button onclick="window.location.href='{{ path('app_event_details', {'id': events[index].id})}}'" class="btn custom-green">voir plus</button>
 
-
-
-
+                             
                         </div>
                     {% endif %}
                 {% endfor %}
-              
             </div>
         {% endfor %}
-        
 {% endblock %}
