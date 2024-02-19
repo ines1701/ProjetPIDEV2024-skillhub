@@ -1,10 +1,9 @@
 
 
-{% block title %}LISTE DES EVENEMENTS{% endblock %}
 
+{% block content %}
+ <div class="content-containers">
 
-{% block body %}
- 
     <h1>LISTE DES EVENEMENTS</h1>
     
 
@@ -19,7 +18,6 @@
                 <th>Image</th>
                  <th>Vidéo</th>
                 <th>type</th>
-              
                 <th>actions</th>
             </tr>
         </thead>
@@ -55,7 +53,6 @@
  
 
                  <td>{{ event.type }}</td>
-              
 
 
                       <td>
@@ -73,5 +70,5 @@
         {% endfor %}
         </tbody>
     </table>
-
+  </div>
 {% endblock %}
