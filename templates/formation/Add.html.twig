@@ -1,5 +1,9 @@
 
-
+{% extends 'baseback.html.twig'%}
+{% block body%}
+</br>
+</br>
+</br>
 <h1>add formation</h1>
 {{ form_start(f,{attr:{novalidate:'novalidate'}}) }}
     <label for="inputText">Titre du projet</label>
@@ -22,6 +26,6 @@
    <br/> {{ form_errors(f.updated,{'attr':{'class':'text-danger'}}) }}
     {{ form_end(f) }}
     
-
+{%endblock%}
     
  

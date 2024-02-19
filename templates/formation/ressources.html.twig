@@ -1,12 +1,14 @@
-<style>
-    .center-container {
+{% extends 'baseback.html.twig'%}
+{% block body%}
+
+     <style>
+        .center-container {
         display: flex;
         justify-content: center;
         align-items: center;
-     
         flex-direction: column;
-    }
-</style>
+         }
+     </style>
 
 <div class="center-container">
     <h1 style="text-align: center;">Ressources pour la formation : {{ formation.titre }}</h1>
@@ -31,3 +33,4 @@
         <p>Aucune ressource disponible pour cette formation.</p>
     {% endif %}
 </div>
+{%endblock%}
