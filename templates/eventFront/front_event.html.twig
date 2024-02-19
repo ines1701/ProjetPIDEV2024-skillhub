@@ -1,17 +1,23 @@
 {# main_template.twig #}
-
+{% extends 'baseF.html.twig' %}
 
 {% block stylesheets %}
-   
-    <link rel="stylesheet" href="{{ asset('/form.css') }}">
+    {{ parent() }}
+   <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+   <link rel="stylesheet" href="{{ asset('/form.css') }}">
 {% endblock %}
 
 
 
+{% block title %}LISTE DES EVENEMENTS{% endblock %}
+
 {% block body %}
-    <div style="text-align: center; padding: 40px;">
-        <h1>Les événements disponibles</h1>
-    </div>
+<br></br>
+<br></br>
+
+   <div style="text-align: center; padding: 40px;">
+    <h1 style="color: green;">Les événements disponibles</h1>
+</div>
     <div style="text-align: center; padding: 40px;">
         {% set groupSize = 3 %}
         {% for i in 0..(events|length-1)//groupSize %}

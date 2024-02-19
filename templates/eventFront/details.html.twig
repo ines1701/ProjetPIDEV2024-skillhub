@@ -1,15 +1,21 @@
 {# event_details.twig #}
+{% extends 'baseF.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+   <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+{% endblock %}
+
+
+{% block title %}Détails de l'événement{% endblock %}
 
 {% block body %}
- 
-<div class="background">
-
-
-
+<br></br>
+<br></br>
     <div style="text-align: center; padding: 40px;">
-        <h1 >Détails de l'événement</h1>
+        <h1 style="color: green;">Détails de l'événement</h1>
     </div>
+    
 
     <div style="text-align: center;">
         <h2>{{ event.titre }}</h2>
@@ -23,17 +29,7 @@
         <p>Lieu: {{ event.lieu }}</p>
         <p>Date: {{ event.date ? event.date|date('Y-m-d H:i:s') : '' }}</p>
         <p>Type: {{ event.type }}</p>
-
-                <div id="map"></div>
-
         
-         <button onclick="window.location.href='{{ path('app_event_index') }}'" class="btn custom-green">retour</button>
-    
+         <button onclick="window.location.href='{{ path('app_event_index') }}'" ;class="btn custom-green">retour</button>
     </div>
-</div>
-
-
-
-  
-
 {% endblock %}
