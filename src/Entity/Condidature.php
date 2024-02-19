@@ -81,7 +81,6 @@ class Condidature
     public function setProject(?Project $project): self
     {
         $this->project = $project;
-        $this->project_id = $project ? $project->getId() : null;
         return $this;
     }
 

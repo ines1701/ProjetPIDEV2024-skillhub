@@ -35,8 +35,8 @@
                         <td> {{ p.budget }}</td>
                         <td> {{p.portee }}</td>
                         <td> {{p.description }}</td>
-                        <td><a href="{{ path('app_edit', {'id': p.id }) }}">Editer | </a>
-                            <a href="{{ path('app_delete', {'id': p.id}) }}">Supprimer | </a>
+                        <td><a href="{{ path('app_editProjet', {'id': p.id }) }}">Editer | </a>
+                            <a href="{{ path('app_deleteFA', {'id': p.id}) }}">Supprimer | </a>
                             <a href="{{ path('app_dP', {'id': p.id}) }}">Détails</a>
                         </td>
                 </tbody> {% endfor %}
@@ -79,7 +79,7 @@
                         <td> {{ c.projectId }}</td>
                         <td>
                             <a href="{{ path('app_dC', {'id': c.id}) }}">Supprimer | </a>
-                            <a href="{{ path('app_dC', {'id': c.id}) }}">Détails</a>
+                            <a href="{{ path('app_dC', {'id': c.id}) }}">Accepter</a>
                         </td>
                 </tbody> {% endfor %}
               </table>

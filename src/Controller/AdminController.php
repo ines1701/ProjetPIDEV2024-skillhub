@@ -37,7 +37,7 @@ class AdminController extends AbstractController
 
     return $this->render('condidate/detp.html.twig', ['p' => $projet]);
 }
-#[Route('/modif/{id}', name: 'app_edit')]
+#[Route('/modif/{id}', name: 'app_editProjet')]
 public function edit(ProjectRepository $repository, $id, Request $request,EntityManagerInterface $em)
 {
     $projet = $repository->find($id);
@@ -52,7 +52,7 @@ public function edit(ProjectRepository $repository, $id, Request $request,Entity
         'f' => $form->createView(),
     ]);
 }
-    #[Route('/delete/{id}', name: 'app_delete')]
+    #[Route('/deleteFromAdmin/{id}', name: 'app_deleteFA')]
     public function delete($id, ProjectRepository $repository,EntityManagerInterface $em)
     {
     $projet = $repository->find($id);

@@ -78,13 +78,13 @@ class HomeController extends AbstractController
             'f' => $form->createView(),
         ]);
 }
-#[Route('/delete/{id}', name: 'app_delete')]
+#[Route('/deleteFront/{id}', name: 'app_deleteFront')]
 public function delete($id, ProjectRepository $repository,EntityManagerInterface $em)
 {
-    $projet = $repository->find($id);
-    $em->remove($projet);
-    $em->flush();
-    return $this->redirectToRoute('app_All');
+$projet = $repository->find($id);
+$em->remove($projet);
+$em->flush();
+return $this->redirectToRoute('app_All');
 }
 #[Route('/projectdetails/{id}', name: 'app_detailProject')]
 public function showProject($id, ProjectRepository $repository)
@@ -108,14 +108,17 @@ public function showProject($id, ProjectRepository $repository)
         #[Route('/addCondidature/{id}', name: 'app_condidature', methods: ['GET','POST'])]
         public function  AddCondidature ($id, EntityManagerInterface $em,Request $request, ProjectRepository $projectRepository)
         {
+            $project= $projectRepository->find($id);
+
             $condidature=new Condidature();
+            $condidature->setProject($project);
             $form =$this->CreateForm(CondidatureFormType::class,$condidature);
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid())
             {
-                $project= $projectRepository->find($id);
-                $condidature->setProject($project);
+                
+                
                 $em->persist($condidature);
                 $em->flush();
                 return $this->redirectToRoute('app_All');
