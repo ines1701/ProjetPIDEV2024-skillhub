@@ -154,7 +154,23 @@ public function showProject($id, ProjectRepository $repository)
     $em->flush();
     return $this->redirectToRoute('app_Cond');
     }
-}
 
+    /*condidature Home pour client*/
+    #[Route('/allCond', name: 'app_AllCondidature')]
+    public function AfficheCondidatures (CondidatureRepository $condidature)
+        {
+            $condidature=$condidature->findAll() ;
+            return $this->render('projectTemp/allcond.html.twig',['condidature'=>$condidature]);
+    }
+    #[Route('/deleteC/{id}', name: 'app_deleteCondidature')]
+    public function deletecondidature($id, CondidatureRepository $repository,EntityManagerInterface $em)
+    {
+    $condidature = $repository->find($id);
+    $em->remove($condidature);
+    $em->flush();
+    return $this->redirectToRoute('app_AllCondidature');
+    
+}
+}
     
 
