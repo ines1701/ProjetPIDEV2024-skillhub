@@ -4,32 +4,38 @@
 {% block stylesheets %}
     {{ parent() }}
    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+       <style>
+        @keyframes gradientChange {
+            0% { background: linear-gradient(to right, #ffcccc, #cc99ff); }
+            50% { background: linear-gradient(to right, #cc99ff, #ffcccc); }
+            100% { background: linear-gradient(to right, #ffcccc, #cc99ff); }
+        }
+
+        body {
+            animation: gradientChange 3s infinite;
+        }
+    </style>
 {% endblock %}
 
 
 {% block title %}Détails de l'événement{% endblock %}
 
 {% block body %}
-<br></br>
-<br></br>
+    <br></br>
+    <br></br>
     <div style="text-align: center; padding: 40px;">
-        <h1 style="color: green;">Détails de l'événement</h1>
+        <h1 style="color: white; text-shadow: 2px 2px 4px rgba(255,255,255,0.7);">Détails de l'événement</h1>
     </div>
-    
 
     <div style="text-align: center;">
-        <h2>{{ event.titre }}</h2>
-        
-              <video controls style="max-width: 80%;">
+        <h2 style="color: white;">{{ event.titre }}</h2>
+        <video controls style="max-width: 80%;">
             <source src="{{ asset('/images/affiche/' ~ event.video) }}" type="video/mp4">
         </video>
-
-
-        <p>{{ event.describ }}</p>
-        <p>Lieu: {{ event.lieu }}</p>
-        <p>Date: {{ event.date ? event.date|date('Y-m-d H:i:s') : '' }}</p>
-        <p>Type: {{ event.type }}</p>
-        
-         <button onclick="window.location.href='{{ path('app_event_index') }}'" ;class="btn custom-green">retour</button>
+        <p style="color: white;">{{ event.describ }}</p>
+        <p style="color: white;">Lieu: {{ event.lieu }}</p>
+        <p style="color: white;">Date: {{ event.date ? event.date|date('Y-m-d H:i:s') : '' }}</p>
+        <p style="color: white;">Type: {{ event.type }}</p>
+        <button onclick="window.location.href='{{ path('app_event_index') }}'" class="btn custom-green">retour</button>
     </div>
 {% endblock %}

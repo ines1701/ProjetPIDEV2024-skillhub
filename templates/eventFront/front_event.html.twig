@@ -5,6 +5,19 @@
     {{ parent() }}
    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
    <link rel="stylesheet" href="{{ asset('/form.css') }}">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        @keyframes gradientChange {
+            0% { background: linear-gradient(to right, #ffcccc, #cc99ff); }
+            50% { background: linear-gradient(to right, #cc99ff, #ffcccc); }
+            100% { background: linear-gradient(to right, #ffcccc, #cc99ff); }
+        }
+
+        body {
+            animation: gradientChange 3s infinite;
+        }
+    </style>
+   
 {% endblock %}
 
 
@@ -12,12 +25,12 @@
 {% block title %}LISTE DES EVENEMENTS{% endblock %}
 
 {% block body %}
-<br></br>
-<br></br>
+    <br></br>
+    <br></br>
 
-   <div style="text-align: center; padding: 40px;">
-    <h1 style="color: green;">Les événements disponibles</h1>
-</div>
+    <div style="text-align: center; padding: 40px;">
+        <h1 style="color: white; text-shadow: 2px 2px 4px rgba(255,255,255,0.7);">Les événements disponibles</h1>
+    </div>
     <div style="text-align: center; padding: 40px;">
         {% set groupSize = 3 %}
         {% for i in 0..(events|length-1)//groupSize %}
@@ -27,18 +40,16 @@
                     {% if index < events|length %}
                         <div class="event-box">
                             <img src="{{ asset('images/affiche/' ~ events[index].image) }}" alt="Event Image" class="event-image" style="display: block; margin: 0 auto; max-width: 400px; height: auto;">
-                            <h2 style="font-size: 35px; font-weight: bold; color: #333;">{{ events[index].titre }}</h2>
-                            <p style="font-size: 25px;">{{ events[index].describ }}</p>
+                            <h2 style="font-size: 35px; font-weight: bold; color: #333; text-shadow: 2px 2px 4px rgba(255,255,255,0.7);">{{ events[index].titre }}</h2>
+                            <p style="font-size: 25px; word-break: break-word;">{{ events[index].describ }}</p>
                             <p style="font-size: 18px;">Lieu: {{ events[index].lieu }}</p>
                             <p>Date: {{ events[index].date ? events[index].date|date('Y-m-d H:i:s') : '' }}</p>
                             <p style="font-size: 18px;">Type: {{ events[index].type }}</p>
-                       
-                             <button onclick="window.location.href='{{ path('app_event_details', {'id': events[index].id})}}'" class="btn custom-green">voir plus</button>
-
-                             
+                            <button onclick="window.location.href='{{ path('app_event_details', {'id': events[index].id})}}'" class="btn custom-green">voir plus</button>
                         </div>
                     {% endif %}
                 {% endfor %}
             </div>
         {% endfor %}
+    </div>
 {% endblock %}
