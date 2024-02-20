@@ -1,0 +1,19 @@
+ {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+{# Ici, vous générez chaque champ individuellement pour pouvoir appliquer des attributs spécifiques #}
+{# Exemple pour un champ nommé 'yourFieldName' #}
+{{ form_row(form, {
+    'attr': {
+        'required': 'required',
+        'pattern': '[a-zA-Z]+',
+        'title': 'Le champ doit contenir uniquement des lettres.'
+    }
+}) }}
+
+{# Génère le reste des champs automatiquement #}
+{{ form_rest(form) }}
+
+{# Bouton de soumission du formulaire #}
+<center> <button type="submit" class="btn btn-success btn-sm">{{ button_label|default('Save') }}</button></center>
+
+{{ form_end(form) }}

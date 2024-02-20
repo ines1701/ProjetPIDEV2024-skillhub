@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Transaction index{% endblock %}
+
+{% block body %}
+<br><br>
+    <h1 style="color:green; text-align: center;">Transaction</h1>
+
+    <table class="table table-bordered" style="border-color:black;width:70%;margin-left:15%">
+        <thead>
+            <tr style="border-color:black">
+                
+                <th style="background-color:green;color :white">Date_transaction</th>
+                <th style="background-color:green;color :white">Methode_paiement</th>
+                <th style="background-color:green;color :white">Montant</th>
+                 <th style="background-color:green;color :white">Contrat</th>
+                <th style="background-color:green;color :white">actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for transaction in transactions %}
+            <tr>
+                
+                <td>{{ transaction.dateTransaction ? transaction.dateTransaction|date('Y-m-d') : '' }}</td>
+                <td>{{ transaction.methodePaiement }}</td>
+                <td>{{ transaction.montant }}</td>
+                 <td>{{ transaction.contrat.id }}</td>
+                <td>
+                   <button class="btn btn-primary btn-sm"> <a href="{{ path('app_transaction_show', {'id': transaction.id}) }}"style="color:white;text-align:center;">afficher</a></button>
+
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+  <center> <button class="btn btn-success btn-sm">  <a href="{{ path('app_transaction_new') }}"style="color:white;text-align:center;">ajouter</a></button> </center>
+{% endblock %}

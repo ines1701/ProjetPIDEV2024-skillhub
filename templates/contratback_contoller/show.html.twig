@@ -1,0 +1,42 @@
+{% extends 'baseback.html.twig' %}
+
+{% block body %}
+<main id="main" class="main">
+    <h1 style="color:#012970;text-align:left;">Contrat</h1>
+
+    <table class="table table-bordered" style="border-color:black;width:60%">
+        <tbody>
+            <tr  style="border-color:black">
+                <th style="background-color:#012970;color :white;width:100px">Id</th>
+                <td>{{ contrat.id }}</td>
+            </tr>
+            <tr  style="border-color:black">
+                <th style="background-color:#012970;color :white">Nom_client</th>
+                <td>{{ contrat.nomClient }}</td>
+            </tr>
+           <tr  style="border-color:black">
+                <th style="background-color:#012970;color :white">Date_contrat</th>
+                <td>{{ contrat.dateContrat ? contrat.dateContrat|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr  style="border-color:black">
+                <th style="background-color:#012970;color :white">Montant</th>
+                <td>{{ contrat.montant }}</td>
+            </tr>
+            <tr  style="border-color:black">
+                <th style="background-color:#012970;color :white">Description</th>
+                <td>{{ contrat.description }}</td>
+            </tr>
+            <tr style="border-color:black" >
+                 <th style="background-color:#012970;color :white;width:100px">image</th>
+                <td><img src="{{ asset('uploads/' ~ contrat.image) }}" width=100 px;height=100 px" ></td>
+            </tr>
+        </tbody>
+    </table>
+
+   <button class="btn btn-primary btn-sm"> <a href="{{ path('app_contratback_contoller_index') }}"style="color:white">back to list</a></button>
+
+    
+
+    
+    </main><!-- End #main -->
+{% endblock %}

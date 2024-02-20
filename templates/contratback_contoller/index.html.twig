@@ -1,0 +1,47 @@
+{% extends 'baseback.html.twig' %}
+
+{% block title %}Contrat index{% endblock %}
+
+   
+{% block body %}
+
+<main id="main" class="main">
+
+    <h1 style="color:#012970; text-align: center;">Contrat </h1>
+
+    <table class="table table-bordered" style="border-color:black">
+        <thead>
+            <tr  style="border-color:black">
+                
+                <th style="background-color:#012970;color :white">Nom_client</th>
+                <th style="background-color:#012970;color: white">Date_contrat</th>
+                <th style="background-color:#012970;color: white">Montant</th>
+                <th style="background-color:#012970;color: white">Description</th>
+                <th style="background-color:#012970;color: white">image</th>
+                <th style="background-color:#012970;color: white">actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for contrat in contrats %}
+            <tr>
+                
+                <td>{{ contrat.nomClient }}</td>
+                <td>{{ contrat.dateContrat ? contrat.dateContrat|date('Y-m-d') : '' }}</td>
+                <td>{{ contrat.montant }}</td>
+                <td>{{ contrat.description }}</td>
+                <td><img src="{{ asset('uploads/' ~ contrat.image) }}" width=100 px;height=100 px""></td>
+                <td>
+                    <a href="{{ path('app_contratback_contoller_show', {'id': contrat.id}) }}" class="btn btn-primary btn-sm">afficher</a>
+                   
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</main><!-- End #main -->
+    
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Transaction{% endblock %}
+
+{% block body %}<br><br><br>
+    <h1 style="margin-left:25%">Transaction</h1>
+
+    <table class="table table-bordered" style="border-color:black;width:50%;margin-left:25%">
+        <tbody>
+            <tr style="border-color:black">
+                <th style="background-color:green;color:white;width:100px">Id</th>
+                <td>{{ transaction.id }}</td>
+            </tr>
+            <tr style="border-color:black">
+                <th style="background-color:green;color:white;width:100px">Date_transaction</th>
+                <td>{{ transaction.dateTransaction ? transaction.dateTransaction|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr style="border-color:black">
+                <th style="background-color:green;color:white;width:100px">Methode_paiement</th>
+                <td>{{ transaction.methodePaiement }}</td>
+            </tr>
+            <tr style="border-color:black">
+                <th style="background-color:green;color:white;width:100px">Montant</th>
+                <td>{{ transaction.montant }}</td>
+            </tr>
+            <tr style="border-color:black">
+                <th style="background-color:green;color:white;width:100px">contrat</th>
+                <td>{{ transaction.contrat.id }}</td>
+            </tr>
+        </tbody>
+    </table>
+<br>
+    <center>
+        <button class="btn btn-success btn-sm">
+            <a href="{{ path('app_transaction_index') }}" style="color:white; text-decoration:none;">back to list</a>
+        </button>
+    </center>
+    <br>
+
+    <br>
+    
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}New Contrat{% endblock %}
+
+{% block body %}<br><br><br>
+    
+    <h1 style="margin-left:17%">Create Contrat</h1>
+<div style="width:60%;margin-left:17%">
+   {{ include('contrat/_form.html.twig') }} <center> 
+   <br>
+   <button class="btn btn-success btn-sm">  <a href="{{ path('app_contrat_index') }}"style="color:white;">back to list</a></button></center>
+</div>
+  
+{% endblock %}

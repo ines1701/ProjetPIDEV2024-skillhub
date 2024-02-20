@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Transaction{% endblock %}
+
+{% block body %}<br><br><br>
+    
+    <h1 style="margin-left:17%">Create Transaction</h1>
+<div style="width:60%;margin-left:17%">
+    {{ include('transaction/_form.html.twig') }}
+    <center>
+        <br>
+        <button class="btn btn-success btn-sm">
+            <a href="{{ path('app_transaction_index') }}" style="color: white; text-decoration: none;">back to list</a>
+        </button>
+    </center>
+</div>
+
+{% endblock %}

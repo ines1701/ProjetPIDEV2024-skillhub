@@ -1,0 +1,45 @@
+{% extends 'baseback.html.twig' %}
+
+{% block title %}Transaction index{% endblock %}
+
+{% block body %}
+<main id="main" class="main">
+
+    <h1 style="color:#012970; text-align: center;">Transaction</h1>
+
+    <table class="table table-bordered" style="border-color:black">
+        <thead>
+            <tr  style="border-color:black">
+                
+                <th style="background-color:#012970;color :white">Date_transaction</th>
+                <th style="background-color:#012970;color :white">Methode_paiement</th>
+                <th style="background-color:#012970;color :white">Montant</th>
+                <th style="background-color:#012970;color :white">contrat</th>
+
+                <th style="background-color:#012970;color :white">actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for transaction in transactions %}
+            <tr>
+                
+                <td>{{ transaction.dateTransaction ? transaction.dateTransaction|date('Y-m-d') : '' }}</td>
+                <td>{{ transaction.methodePaiement }}</td>
+                <td>{{ transaction.montant }}</td>
+                <td>{{ transaction.contrat.id }}</td>
+                <td>
+                    <a href="{{ path('app_transactionback_show', {'id': transaction.id}) }}" class="btn btn-primary btn-sm">afficher</a>
+                    
+                    
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</main><!-- End #main -->
+    
+{% endblock %}
