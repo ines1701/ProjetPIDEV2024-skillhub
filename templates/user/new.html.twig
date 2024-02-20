@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New User{% endblock %}
+
+{% block body %}
+<link rel="stylesheet" type="text/css" href="{{ asset('back/css/styleuser.css') }}">
+<div class="center">
+    <h1>Create new User</h1>
+</div>
+    {{ include('user/_form.html.twig') }}
+<div class="center">
+   <br><br><br> <a href="{{ path('app_user_index') }}">back to list</a></br></br></br>
+    </div>
+{% endblock %}

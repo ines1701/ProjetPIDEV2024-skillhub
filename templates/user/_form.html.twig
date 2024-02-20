@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Votre titre ici</title>
+    <link rel="stylesheet" type="text/css" href="{{ asset('back/css/styleb.css') }}">
+</head>
+<body>
+
+{{ form_start(form, {'attr': {'class': 'custom-form'}}) }}
+    {{ form_widget(form) }}
+    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
+
+</body>
+</html>

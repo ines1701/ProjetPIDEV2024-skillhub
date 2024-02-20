@@ -1,0 +1,93 @@
+/* style.css */
+
+body {
+    background-color: #f0f8ff; /* bleu clair */
+    color: #333; /* noir */
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    color: #4169e1; /* bleu moyen */
+}
+
+.table {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+}
+
+.table th,
+.table td {
+    border: 1px solid #4169e1; /* bleu moyen */
+    padding: 8px;
+}
+
+.table th {
+    background-color: #4169e1; /* bleu moyen */
+    color: white;
+}
+
+.table td {
+    background-color: #fff; /* blanc */
+}
+
+a.btn {
+    background-color: #4169e1; /* bleu moyen */
+    color: white;
+    padding: 5px 10px;
+    text-decoration: none;
+    border-radius: 3px;
+    margin-right: 5px;
+}
+
+a.btn:hover {
+    background-color: #6495ed; /* bleu plus clair au survol */
+}
+.center {
+    text-align: center;
+    margin-top: 20px; /* Ajoutez un espace en haut pour l'esthétique */
+}
+/* Style du formulaire */
+.custom-form {
+    width: 300px;
+    margin: 0 auto;
+    background-color: #ffffff; /* Blanc */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Style des labels */
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #007bff; /* Bleu */
+}
+
+/* Style des champs de texte */
+input[type="text"],
+input[type="email"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #007bff; /* Bleu */
+    border-radius: 5px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+/* Style du bouton */
+.btn {
+    background-color: #007bff; /* Bleu */
+    color: #ffffff; /* Blanc */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* Style au survol du bouton */
+.btn:hover {
+    background-color: #0056b3; /* Bleu foncé */
+}

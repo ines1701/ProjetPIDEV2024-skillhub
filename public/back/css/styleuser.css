@@ -1,0 +1,44 @@
+/* Style du formulaire */
+form {
+    width: 300px;
+    margin: 0 auto;
+    background-color: #ffffff; /* Blanc */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Style des labels */
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #007bff; /* Bleu */
+}
+
+/* Style des champs de texte */
+input[type="text"],
+input[type="email"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #007bff; /* Bleu */
+    border-radius: 5px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+/* Style du bouton */
+.btn {
+    background-color: #007bff; /* Bleu */
+    color: #ffffff; /* Blanc */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* Style au survol du bouton */
+.btn:hover {
+    background-color: #0056b3; /* Bleu foncé */
+}

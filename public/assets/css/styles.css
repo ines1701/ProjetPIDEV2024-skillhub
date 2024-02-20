@@ -1,0 +1,52 @@
+/* style.css */
+
+body {
+    background-color: white; /* blanc */
+    color: black;
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    color: green; /* vert */
+}
+
+form {
+    margin: 20px;
+    padding: 20px;
+    border: 2px solid green; /* vert */
+    border-radius: 10px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: green; /* vert */
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid green; /* vert */
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+.btn {
+    background-color: green; /* vert */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: darkgreen; /* vert plus foncé au survol */
+}
