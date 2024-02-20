@@ -174,6 +174,14 @@ public function showProject($id, ProjectRepository $repository)
     return $this->redirectToRoute('app_AllCondidature');
     
 }
+#[Route('/condProject/{id}', name: 'app_condidatureproject')]
+    public function AfficheCondProject (ProjectRepository $repository, CondidatureRepository $condidatureRep, $id)
+        {
+            $project=$repository->find($id) ; //select *
+            $condidature=$condidatureRep->findBy(['projet' => $project]) ;
+            
+            return $this->render('projectTemp/detcondidature.html.twig',['p'=>$project , 'condidature'=>$condidature]);
+    }
 }
     
 
