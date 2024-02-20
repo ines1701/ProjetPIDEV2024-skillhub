@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+
 use App\Repository\EventRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -17,20 +18,45 @@ class Event
     #[ORM\Column]
     private ?int $id = null;
 
-
-       /**
-     * @Assert\NotBlank(message="Le titre ne peut pas être vide.")
+ /**
+     * @Assert\NotBlank(message=" Le titre ne peut pas etre vide.")
+     * @Assert\Length(
+     *          min = 5,
+     *          minMessage = "Le titre doit avoir minimum 5 caractères."
+     * )
      */
-    #[ORM\Column(length: 255)]
-  
-    private ?string $titre = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $titre = null;
+ /**
+     * @Assert\NotBlank(message=" La description ne peut pas etre vide.")
+     * @Assert\Length(
+     *          min = 25,
+     *          minMessage = "La description doit avoir minimum 25 caractères."
+     * )
+     */
     #[ORM\Column(length: 255)]
     private ?string $describ = null;
 
+ /**
+     * @Assert\NotBlank(message=" Le lieu ne peut pas etre vide.")
+     * @Assert\Length(
+     *          min = 5,
+     *          minMessage = "Le lieu doit avoir minimum 5 caractères."
+     * )
+     */
     #[ORM\Column(length: 255)]
     private ?string $lieu = null;
 
+
+
+     /**
+    
+     * @Assert\GreaterThanOrEqual(
+     *      "today",
+     *      message="La date doit être égale ou postérieure à aujourd'hui."
+     * )
+     */
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date = null;
 
@@ -42,7 +68,6 @@ class Event
      */
     private $imageFile;
 
-
     #[ORM\Column(length: 255)]
     private ?string $video = null;
 
@@ -50,6 +75,10 @@ class Event
     #[ORM\ManyToOne(inversedBy: 'events')]
     #[ORM\JoinColumn(nullable: false)]
     private ?TypeEvent $type = null;
+
+ 
+
+
 
 
 

@@ -36,8 +36,6 @@ class EventType extends AbstractType
                 'class' => TypeEvent::class,
                 'choice_label' => 'label',
             ]);
-            
-           
     
         
     }

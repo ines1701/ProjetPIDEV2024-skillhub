@@ -86,7 +86,10 @@ if ($videoFile) {
         $form = $this->createForm(EventType::class, $event);
         $form->handleRequest($request);
 
+    
+
         if ($form->isSubmitted() && $form->isValid()) {
+
 
             $imageFile = $form->get('imageFile')->getData();
 $currentImage = $event->getImage(); // Récupérer l'image actuelle de l'événement
