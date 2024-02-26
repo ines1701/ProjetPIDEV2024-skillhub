@@ -10,17 +10,32 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\PaginatorInterface;
+
 
 #[Route('/contrat')]
 class ContratController extends AbstractController
 {
     #[Route('/', name: 'app_contrat_index', methods: ['GET'])]
-    public function index(ContratRepository $contratRepository): Response
-    {
-        return $this->render('contrat/index.html.twig', [
-            'contrats' => $contratRepository->findAll(),
-        ]);
-    }
+public function index(Request $request, ContratRepository $contratRepository): Response
+{
+    $contratQuery = $contratRepository->findAll(); // Récupère tous les contrats
+    $currentPage = $request->query->getInt('page', 1); // Numéro de la page actuelle
+    $perPage = 5; // Éléments par page
+    $totalcontrat = count($contratQuery); // Nombre total de contrats
+    $totalPages = ceil($totalcontrat / $perPage); // Nombre total de pages
+    $offset = ($currentPage - 1) * $perPage; // Décalage pour la pagination
+    $contrats = array_slice($contratQuery, $offset, $perPage); // Obtient les contrats pour la page actuelle
+
+    return $this->render('contrat/index.html.twig', [
+        'contrats' => $contrats, // Assurez-vous que c'est 'contrats' et non 'contrat' pour correspondre à votre template
+        'totalcontrat' => $totalcontrat,
+        'perPage' => $perPage,
+        'currentPage' => $currentPage,
+        'totalPages' => $totalPages,
+    ]);
+}
+
 
     #[Route('/new', name: 'app_contrat_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response

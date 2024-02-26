@@ -1,7 +1,6 @@
 
-
 {% block body %}
-    <h1>Edit Contrat</h1>
+    <h1>Create new Contrat</h1>
 <link
 		rel="shortcut icon" type="image/png" href="{{ asset('assets/images/logos/favicon.png') }}">
 		<!-- Update CSS path -->
@@ -9,9 +8,7 @@
 		{% block stylesheets %}
 			{{ encore_entry_link_tags('app') }}
 		{% endblock %}
-    {{ include('contratback_contoller/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('contratback_controller/_form.html.twig') }}
 
-    <a href="{{ path('app_contratback_contoller_index') }}">back to list</a>
-
-    {{ include('contratback_contoller/_delete_form.html.twig') }}
+    <a href="{{ path('app_contratback_controller_index') }}">back to list</a>
 {% endblock %}

@@ -6,6 +6,7 @@ use App\Entity\Transaction;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class TransactionType extends AbstractType
 {
@@ -13,7 +14,15 @@ class TransactionType extends AbstractType
     {
         $builder
             
-            ->add('methode_paiement')
+        ->add('methode_paiement', ChoiceType::class, [
+            'choices' => [
+                'virement' => 'virement',
+                'chéque' => 'chéque',
+            ],
+            'multiple' => false, // Allow only single choice
+            'expanded' => false,
+            // other options as needed
+        ])
             ->add('montant')
             ->add('Contrat')
             

@@ -39,9 +39,7 @@ class Contrat
  */
     #[ORM\Column(length: 255)]
     private ?string $description = null;
-/**
- * @Assert\NotBlank(message="Le champ ne doit pas être vide.")
- */
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
 

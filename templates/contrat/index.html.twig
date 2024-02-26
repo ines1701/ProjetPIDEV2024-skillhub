@@ -44,4 +44,27 @@
  <center> <button class="btn btn-success btn-sm"> <a href="{{ path('app_contrat_new') }}"style="color:white;text-align:center;">ajouter</a></button> </center>
  <br>
  <center> <button class="btn btn-success btn-sm"> <a href="{{ path('app_transaction_index') }}"style="color:white;text-align:center;">Transaction</a></button> </center>
+ <br>
+ {# Manual pagination controls #}
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        {% if currentPage > 1 %}
+                            <li class="page-item">
+                                <a button class="btn btn-success btn-sm"="page-link" href="{{ path('app_contrat_index', {'page': currentPage - 1}) }}">Previous</a></button>
+                            </li>
+                        {% endif %}
+                        
+                        {% for page in 1..totalPages %}
+                            <li class="page-item{% if page == currentPage %} active{% endif %}">
+                                <a button class="btn btn-success btn-sm"="page-link" href="{{ path('app_contrat_index', {'page': page}) }}">{{ page }}</a></button>
+                            </li>
+                        {% endfor %}
+                        
+                        {% if currentPage < totalPages %}
+                            <li class="page-item">
+                                <a button class="btn btn-success btn-sm"="page-link" href="{{ path('app_contrat_index', {'page': currentPage + 1}) }}">Next</a></button>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
 {% endblock %}

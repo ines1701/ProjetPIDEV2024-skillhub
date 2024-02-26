@@ -20,6 +20,14 @@ class ContratRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Contrat::class);
     }
+    public function searchcontrat($searchQuery)
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.nom_client LIKE :query OR p.description LIKE :query')
+            ->setParameter('query', '%' . $searchQuery . '%')
+            ->getQuery()
+            ->getResult();
+    }
 
 //    /**
 //     * @return Contrat[] Returns an array of Contrat objects
@@ -45,4 +53,5 @@ class ContratRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
 }

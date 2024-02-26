@@ -20,6 +20,14 @@ class TransactionRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Transaction::class);
     }
+    // src/Repository/TransactionRepository.php
+    /**
+     * Recherche les posts en fonction d'un terme de recherche dans le titre.
+     *
+     * @param string $searchTerm Le terme de recherche
+     * @return Transaction[] Les posts correspondant au terme de recherche
+     */
+    
 
 //    /**
 //     * @return Transaction[] Returns an array of Transaction objects

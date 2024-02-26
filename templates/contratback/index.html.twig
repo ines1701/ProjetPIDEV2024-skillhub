@@ -6,9 +6,12 @@
 {% block body %}
 
 <main id="main" class="main">
-
     <h1 style="color:#012970; text-align: center;">Contrat </h1>
-
+        <form action="{{ path('app_contratback_controller_index') }}" method="get">
+            <input type="text" name="q" placeholder="Search..." value="{{ searchQuery }}">
+            <button class="btn btn-primary btn-sm" type="submit">Search</button>
+        </form>
+<br>
     <table class="table table-bordered" style="border-color:black">
         <thead>
             <tr  style="border-color:black">
@@ -31,7 +34,7 @@
                 <td>{{ contrat.description }}</td>
                 <td><img src="{{ asset('uploads/' ~ contrat.image) }}" width=100 px;height=100 px""></td>
                 <td>
-                    <a href="{{ path('app_contratback_contoller_show', {'id': contrat.id}) }}" class="btn btn-primary btn-sm">afficher</a>
+                    <a href="{{ path('app_contratback_controller_show', {'id': contrat.id}) }}" class="btn btn-primary btn-sm">afficher</a>
                    
                 </td>
             </tr>
