@@ -17,20 +17,22 @@ class TransactionbackController extends AbstractController
    
    // src/Controller/TransactionBackController.php
 
-    #[Route('/', name: 'app_transactionback_index', methods: ['GET'])]
-     public function index(TransactionRepository $transactionRepository,EntityManagerInterface $entityManager): Response
-    { 
-        $transactionStatistics = $entityManager->createQueryBuilder()
-            ->select('p.methode_paiement, COUNT(p.id) as transactionCount')
-            ->from('App\Entity\Transaction', 'p')
-            ->groupBy('p.methode_paiement')
-            ->getQuery()
-            ->getResult();
-     return $this->render('transactionback/index.html.twig', [
-        'transactions' => $transactionRepository->findAll(),
-        'transactionStatistics' => $transactionStatistics,
-    ]);
-    }
+   #[Route('/', name: 'app_transactionback_index', methods: ['GET'])]
+   public function index(TransactionRepository $transactionRepository, EntityManagerInterface $entityManager): Response
+   {
+       $transactionStatistics = $entityManager->createQueryBuilder()
+           ->select('p.methode_paiement, COUNT(p.id) as transactionCount')
+           ->from('App\Entity\Transaction', 'p')
+           ->groupBy('p.methode_paiement')
+           ->getQuery()
+           ->getResult();
+       return $this->render('transactionback/index.html.twig', [
+           'transactions' => $transactionRepository->findAll(),
+           'transactionStatistics' => $transactionStatistics,
+           
+       ]);
+   }
+
 
 
     #[Route('/new', name: 'app_transactionback_new', methods: ['GET', 'POST'])]

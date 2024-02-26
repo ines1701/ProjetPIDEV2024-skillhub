@@ -11,11 +11,18 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
-
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 #[Route('/contrat')]
 class ContratController extends AbstractController
 {
+    private $transactionRepository;
+
+    public function __construct(ContratRepository $transactionRepository)
+    {
+        $this->transactionRepository = $transactionRepository;
+    }
     #[Route('/', name: 'app_contrat_index', methods: ['GET'])]
 public function index(Request $request, ContratRepository $contratRepository): Response
 {
@@ -105,4 +112,29 @@ public function index(Request $request, ContratRepository $contratRepository): R
 
         return $this->redirectToRoute('app_contrat_index', [], Response::HTTP_SEE_OTHER);
     }
+    
+        public function printPdf(): Response
+        {
+            // Configure Dompdf according to your needs
+            $pdfOptions = new Options();
+            $pdfOptions->set('defaultFont', 'Arial');
+            $pdfOptions->setIsRemoteEnabled(true);
+    
+            // Instantiate Dompdf with our options
+            $dompdf = new Dompdf($pdfOptions);
+            $contrats = $this->transactionRepository->findAll();
+            
+            // Generate the HTML content
+            $html = $this->renderView('contrat/print.html.twig', ['contrats' => $contrats]);
+    
+            // Load HTML to Dompdf
+            $dompdf->loadHtml($html);
+            $dompdf->setPaper('A4', 'portrait'); // Setup the paper size and orientation
+            $dompdf->render(); // Render the HTML as PDF
+    
+            $filename = sprintf('contrat-%s.pdf', date('Y-m-d_H-i-s'));
+    
+            // Output the generated PDF to Browser (force download)
+            return new Response($dompdf->stream($filename, ["Attachment" => true]));
+        }
 }

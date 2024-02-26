@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Contrat Print</title>
+    <link rel="stylesheet" href="/style.css" media="all" />
+</head>
+<body>
+<header class="clearfix">
+    
+    <h1 align="center"> Contrats </h1>
+    <hr></hr>
+    
+    <table class="table">
+        <thead>
+            <tr>
+                
+                <th style="background-color:green;color :white">Nom_client</th>
+                <th style="background-color:green;color :white">Date_contrat</th>
+                <th style="background-color:green;color :white">Montant</th>
+                <th style="background-color:green;color :white">Description</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+        {% for contrat in contrats %}
+            <tr>
+                <td>{{ contrat.nomClient }}</td>
+                <td>{{ contrat.dateContrat ? contrat.dateContrat|date('Y-m-d') : '' }}</td>
+                <td>{{ contrat.montant }}</td>
+                <td>{{ contrat.description }}</td>
+                
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</header>
+</main>
+
+</body>
