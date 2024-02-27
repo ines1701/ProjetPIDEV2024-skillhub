@@ -16,10 +16,11 @@
         body {
             animation: gradientChange 3s infinite;
         }
+
+        
     </style>
    
 {% endblock %}
-
 
 
 {% block title %}LISTE DES EVENEMENTS{% endblock %}
@@ -28,9 +29,13 @@
     <br></br>
     <br></br>
 
+
+   
     <div style="text-align: center; padding: 40px;">
         <h1 style="color: white; text-shadow: 2px 2px 4px rgba(255,255,255,0.7);">Les événements disponibles</h1>
     </div>
+
+  
     <div style="text-align: center; padding: 40px;">
         {% set groupSize = 3 %}
         {% for i in 0..(events|length-1)//groupSize %}
@@ -45,6 +50,7 @@
                             <p style="font-size: 18px;">Lieu: {{ events[index].lieu }}</p>
                             <p>Date: {{ events[index].date ? events[index].date|date('Y-m-d H:i:s') : '' }}</p>
                             <p style="font-size: 18px;">Type: {{ events[index].type }}</p>
+                            
                             <button onclick="window.location.href='{{ path('app_event_details', {'id': events[index].id})}}'" class="btn custom-green">voir plus</button>
                         </div>
                     {% endif %}

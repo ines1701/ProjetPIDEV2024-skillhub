@@ -17,6 +17,8 @@ class EventController extends AbstractController
     #[Route('/', name: 'app_event_index', methods: ['GET'])]
     public function index(EventRepository $eventRepository): Response
     {
+
+        
         return $this->render('eventFront/front_event.html.twig', [
             'events' => $eventRepository->findAll(),
         ]);
@@ -71,6 +73,8 @@ if ($videoFile) {
 
             return $this->redirectToRoute('app_event_new', [], Response::HTTP_SEE_OTHER);
         }
+
+        
 
         return $this->renderForm('event/new.html.twig', [
             'events' => $eventRepository->findAll(),
@@ -143,12 +147,31 @@ if ($videoFile) {
         return $this->redirectToRoute('app_event_new', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/event/{id}', name: 'app_event_details', methods: ['GET'])]
-    public function showEventDetails(Event $event): Response
+
+    
+    public function incrementViews(Event $event, EntityManagerInterface $entityManager)
     {
+        $event->setView ($event->getView () + 1);
+        $entityManager->flush();
+    
+        return new Response(null, Response::HTTP_OK);
+    }
+   
+
+
+
+    #[Route('/event/{id}', name: 'app_event_details', methods: ['GET'])]
+    public function showEventDetails(Event $event, EntityManagerInterface $entityManager): Response
+    {
+
+         // Incrémentez le nombre de vues chaque fois que la page est consultée
+    $event->incrementViews();
+    $entityManager->flush(); // Enregistrez les modifications
+       
         return $this->render('eventFront/details.html.twig', [
             'event' => $event,
         ]);
     }
+
 
 }

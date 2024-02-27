@@ -161,3 +161,21 @@ h1 {
     margin-top: 5px; /* Pour ajouter un espace entre le champ et le message d'erreur */
 }
 
+.view-container {
+    display: inline-block;
+    background-color: #f8f9fa;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #007bff;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.view-label {
+    margin-right: 8px;
+}
+
+.view-value {
+    color: #28a745; /* Couleur verte pour la valeur */
+}

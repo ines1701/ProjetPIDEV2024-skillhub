@@ -14,7 +14,38 @@
         body {
             animation: gradientChange 3s infinite;
         }
+        .view-container {
+    display: inline-block;
+    background-color: #f8f9fa;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #007bff;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.view-label {
+    margin-right: 8px;
+}
+
+.view-value {
+    color: #28a745; /* Couleur verte pour la valeur */
+}
     </style>
+{% endblock %}
+
+
+{% block javascript %}
+    <script>
+        // Envoyer une requête AJAX à votre contrôleur pour incrémenter le nombre de vues
+        $(document).ready(function() {
+            $.ajax({
+                url: "{{ path('app_event_increment_views', {'id': event.id}) }}",
+                method: 'POST',
+            });
+        });
+    </script>
 {% endblock %}
 
 
@@ -27,6 +58,12 @@
         <h1 style="color: white; text-shadow: 2px 2px 4px rgba(255,255,255,0.7);">Détails de l'événement</h1>
     </div>
 
+      <!-- Afficher le nombre de vues -->
+        <div class="view-container">
+            <span class="view-label">Nombre de vues :</span>
+            <span class="view-value">{{ event.view }}</span>
+        </div>
+
     <div style="text-align: center;">
         <h2 style="color: white;">{{ event.titre }}</h2>
         <video controls style="max-width: 80%;">
@@ -38,4 +75,7 @@
         <p style="color: white;">Type: {{ event.type }}</p>
         <button onclick="window.location.href='{{ path('app_event_index') }}'" class="btn custom-green">retour</button>
     </div>
+
+    
+
 {% endblock %}

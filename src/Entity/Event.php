@@ -4,6 +4,8 @@ namespace App\Entity;
 
 
 use App\Repository\EventRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -76,10 +78,10 @@ class Event
     #[ORM\JoinColumn(nullable: false)]
     private ?TypeEvent $type = null;
 
- 
+    #[ORM\Column(nullable: true)]
+    private ?int $view = 0;
 
-
-
+   
 
 
     public function getId(): ?int
@@ -184,6 +186,26 @@ class Event
 
         return $this;
     }
+
+    public function getView(): ?int
+    {
+        return $this->view;
+    }
+
+    public function setView(?int $view): static
+    {
+        $this->view = $view;
+
+        return $this;
+    }
+
+    public function incrementViews(): self
+    {
+        $this->view++;
+
+        return $this;
+    }
+   
 
     
 }
