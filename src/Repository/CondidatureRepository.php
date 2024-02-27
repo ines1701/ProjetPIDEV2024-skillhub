@@ -21,6 +21,15 @@ class CondidatureRepository extends ServiceEntityRepository
         parent::__construct($registry, Condidature::class);
     }
 
+    public function showAllCondidaturesByProject($id){
+        return $this->createQueryBuilder('c')
+        ->join('c.project','p')
+        ->addSelect('p')
+        ->where('p.id = :id')
+        ->setParameter('id',$id)
+        ->getQuery()->getResult();
+    }
+
 //    /**
 //     * @return Condidature[] Returns an array of Condidature objects
 //     */

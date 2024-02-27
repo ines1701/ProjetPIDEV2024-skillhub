@@ -20,12 +20,17 @@ class AdminController extends AbstractController
             'controller_name' => 'AdminController',
         ]);
     }
-    #[Route('/tps', name: 'app_A')]
-    public function Affiche (ProjectRepository $repository, CondidatureRepository $condidature)
+    #[Route('/tps', name: 'app_AP')]
+    public function AfficheP (ProjectRepository $repository)
         {
             $projet=$repository->findAll() ; //select *
+            return $this->render('condidate/tousp.html.twig',['projet'=>$projet]);
+    }
+    #[Route('/tousC', name: 'app_AC')]
+    public function AfficheC (CondidatureRepository $condidature)
+        {
             $condidature=$condidature->findAll() ;
-            return $this->render('condidate/tousp.html.twig',['projet'=>$projet , 'condidature'=>$condidature]);
+            return $this->render('condidate/tousc.html.twig',['condidature'=>$condidature]);
     }
     #[Route('/pdet/{id}', name: 'app_dP')]
     public function showProject($id, ProjectRepository $repository)
@@ -37,28 +42,14 @@ class AdminController extends AbstractController
 
     return $this->render('condidate/detp.html.twig', ['p' => $projet]);
 }
-#[Route('/modif/{id}', name: 'app_editProjet')]
-public function edit(ProjectRepository $repository, $id, Request $request,EntityManagerInterface $em)
-{
-    $projet = $repository->find($id);
-    $form = $this->createForm(ProjectFormType::class, $projet);
-    $form->handleRequest($request);
-    if ($form->isSubmitted() && $form->isValid()) {
-        $em = $this->getDoctrine()->getManager();
-        $em->flush(); // Correction : Utilisez la méthode flush() sur l'EntityManager pour enregistrer les modifications en base de données.
-        return $this->redirectToRoute('app_A');
-    }
-    return $this->render('condidate/modifp.html.twig', [
-        'f' => $form->createView(),
-    ]);
-}
+
     #[Route('/deleteFromAdmin/{id}', name: 'app_deleteFA')]
-    public function delete($id, ProjectRepository $repository,EntityManagerInterface $em)
+    public function deleteProjet($id, ProjectRepository $repository,EntityManagerInterface $em)
     {
     $projet = $repository->find($id);
     $em->remove($projet);
     $em->flush();
-    return $this->redirectToRoute('app_A');
+    return $this->redirectToRoute('app_AP');
     }
 
     #[Route('/delete/{id}', name: 'app_dC')]
@@ -67,6 +58,6 @@ public function edit(ProjectRepository $repository, $id, Request $request,Entity
     $condidature = $repository->find($id);
     $em->remove($condidature);
     $em->flush();
-    return $this->redirectToRoute('app_A');
+    return $this->redirectToRoute('app_AC');
     }
 }

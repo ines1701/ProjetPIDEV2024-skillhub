@@ -9,6 +9,7 @@ use App\Form\ProjectFormType;
 use App\Repository\CondidatureRepository;
 use App\Repository\ProjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Filesystem\Filesystem;
@@ -34,10 +35,15 @@ class HomeController extends AbstractController
         ]);
     }*/
 
-    #[Route('/all', name: 'app_All')]
-    public function Affiche (ProjectRepository $repository)
+        #[Route('/all', name: 'app_All')]
+        public function Affiche (ProjectRepository $repository, PaginatorInterface $paginator, Request $request)
         {
             $projet=$repository->findAll() ; //select *
+            $projet = $paginator->paginate(
+                $projet,
+                $request->query->getInt('page',1),
+                limit: 2,
+            );
             return $this->render('projectTemp/allprojects.html.twig',['projet'=>$projet]);
         }
         
@@ -105,26 +111,26 @@ public function showProject($id, ProjectRepository $repository)
         }
 
 
-        #[Route('/addCondidature/{id}', name: 'app_condidature', methods: ['GET','POST'])]
-        public function  AddCondidature ($id, EntityManagerInterface $em,Request $request, ProjectRepository $projectRepository)
-        {
-            $project= $projectRepository->find($id);
-
-            $condidature=new Condidature();
-            $condidature->setProject($project);
-            $form =$this->CreateForm(CondidatureFormType::class,$condidature);
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted() && $form->isValid())
+            #[Route('/addCondidature/{id}', name: 'app_condidature', methods: ['GET','POST'])]
+            public function  AddCondidature ($id, EntityManagerInterface $em,Request $request, ProjectRepository $projectRepository)
             {
-                
-                
-                $em->persist($condidature);
-                $em->flush();
-                return $this->redirectToRoute('app_All');
+                $project= $projectRepository->find($id);
+
+                $condidature=new Condidature();
+                $condidature->setProject($project);
+                $form =$this->CreateForm(CondidatureFormType::class,$condidature);
+                $form->handleRequest($request);
+
+                if ($form->isSubmitted() && $form->isValid())
+                {
+                    
+                    
+                    $em->persist($condidature);
+                    $em->flush();
+                    return $this->redirectToRoute('app_All');
+                }
+                return $this->render('projectTemp/addcondidature.html.twig',['f'=>$form->createView()]);
             }
-            return $this->render('projectTemp/addcondidature.html.twig',['f'=>$form->createView()]);
-        }
 /*condidature afficher*/
 
         #[Route('/condidatures', name: 'app_Cond')]
@@ -171,14 +177,14 @@ public function showProject($id, ProjectRepository $repository)
     $condidature = $repository->find($id);
     $em->remove($condidature);
     $em->flush();
-    return $this->redirectToRoute('app_AllCondidature');
+    return $this->redirectToRoute('app_Cond');
     
 }
 #[Route('/condProject/{id}', name: 'app_condidatureproject')]
     public function AfficheCondProject (ProjectRepository $repository, CondidatureRepository $condidatureRep, $id)
         {
             $project=$repository->find($id) ; //select *
-            $condidature=$condidatureRep->findBy(['projet' => $project]) ;
+            $condidature=$condidatureRep->showAllCondidaturesByProject($id) ;
             
             return $this->render('projectTemp/detcondidature.html.twig',['p'=>$project , 'condidature'=>$condidature]);
     }

@@ -1,11 +1,11 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseback.html.twig' %}
 {% block body %}
  <br/>
  <br/>
  <br/>
  <main id="main" class="main">
 <section class="section">
-          <div class="row">
+<div class="row">
 <div class="col-lg-12" >
 <div class="card">
             <div class="card-body">
@@ -34,9 +34,9 @@
                         <td> {{ c.numTel }}</td>
                         <td> {{ c.lettremotivation }}</td>
                         <td> {{ c.cv }}</td>
-                        <td> {{ c.projectId.titre }}</td>
+                        <td> {{ c.projectId }}</td>
                         <td>
-                            <a href="{{ path('app_deleteCondidature', {'id': c.id}) }}">Refuser | </a>
+                            <a href="{{ path('app_dC', {'id': c.id}) }}">Supprimer | </a>
                             <a href="{{ path('app_dC', {'id': c.id}) }}">Accepter</a>
                         </td>
                 </tbody> {% endfor %}
@@ -46,8 +46,8 @@
           </div>
           </div>
           </div>
-
-
-          </section>
+    
+    </section>
           </main>
 {% endblock %}
+
