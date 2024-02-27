@@ -19,18 +19,18 @@ public function index(Request $request, ContratRepository $contratRepository): R
 {
     $searchQuery = $request->query->get('q');
 
-    // Initialisez $contratQuery avec tous les contrats par défaut
+    
     $contratQuery = $contratRepository->findAll();
 
-    // Si une requête de recherche est présente, filtrez les contrats basés dessus
+    
     if ($searchQuery) {
         $contratQuery = $contratRepository->searchContrat($searchQuery);
     }
 
-    // Assurez-vous de passer 'searchQuery' à la vue, ainsi que les contrats filtrés ou tous les contrats
+    
     return $this->render('contratback/index.html.twig', [
-        'contrats' => $contratQuery, // Utilisez la variable $contratQuery ici
-        'searchQuery' => $searchQuery, // Passez 'searchQuery' pour l'utiliser dans le template
+        'contrats' => $contratQuery, 
+        'searchQuery' => $searchQuery, 
     ]);
 }
 

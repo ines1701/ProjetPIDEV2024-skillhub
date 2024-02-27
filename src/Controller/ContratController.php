@@ -26,16 +26,16 @@ class ContratController extends AbstractController
     #[Route('/', name: 'app_contrat_index', methods: ['GET'])]
 public function index(Request $request, ContratRepository $contratRepository): Response
 {
-    $contratQuery = $contratRepository->findAll(); // Récupère tous les contrats
-    $currentPage = $request->query->getInt('page', 1); // Numéro de la page actuelle
-    $perPage = 5; // Éléments par page
-    $totalcontrat = count($contratQuery); // Nombre total de contrats
-    $totalPages = ceil($totalcontrat / $perPage); // Nombre total de pages
-    $offset = ($currentPage - 1) * $perPage; // Décalage pour la pagination
-    $contrats = array_slice($contratQuery, $offset, $perPage); // Obtient les contrats pour la page actuelle
+    $contratQuery = $contratRepository->findAll(); 
+    $currentPage = $request->query->getInt('page', 1); 
+    $perPage = 5; 
+    $totalcontrat = count($contratQuery); 
+    $totalPages = ceil($totalcontrat / $perPage); 
+    $offset = ($currentPage - 1) * $perPage; 
+    $contrats = array_slice($contratQuery, $offset, $perPage); 
 
     return $this->render('contrat/index.html.twig', [
-        'contrats' => $contrats, // Assurez-vous que c'est 'contrats' et non 'contrat' pour correspondre à votre template
+        'contrats' => $contrats, 
         'totalcontrat' => $totalcontrat,
         'perPage' => $perPage,
         'currentPage' => $currentPage,
@@ -112,7 +112,7 @@ public function index(Request $request, ContratRepository $contratRepository): R
 
         return $this->redirectToRoute('app_contrat_index', [], Response::HTTP_SEE_OTHER);
     }
-    
+
         public function printPdf(): Response
         {
             // Configure Dompdf according to your needs
