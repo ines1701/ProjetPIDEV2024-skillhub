@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{%block body%}
+{% block body %}
 </br>
 </br>
 </br>
@@ -27,34 +27,41 @@
             display: block;
             margin-bottom: 10px;
         }
+         .see-favorites-link {
+            text-align: right;
+            padding: 20px;
+        }
            
     </style>
 
-<div style="text-align: center; padding: 40px;">
-    <h1>Les formations disponibles</h1>
-   
-   
-</div>
-<div style="text-align: center; padding: 40px;">
-    {% set groupSize = 3 %}
-    {% for i in 0..(formation|length-1)//groupSize %}
-        <div class="formation-group">
-            {% for j in 0..groupSize-1 %}
-                {% set index = i * groupSize + j %}
-                {% if index < formation|length %}
-                    <div class="formation-box">
-                    <img src="{{ ('image/formation.avif') }}" alt="Formation Image" class="formation-image" style="display: block; margin: 0 auto; max-width: 200px; height: auto;">
-                        <h2>{{ formation[index].titre }}</h2>
-                        <p style="font-size: 25px;">{{ formation[index].categorie }}</p>
-                        <p style="font-size: 18px;">{{ formation[index].tuteur }}</p>
-                        <p>posté le {{ formation[index].updated }}</p>
-                        <a href="{{ path('formationFront_ressources', { 'id': formation[index].id }) }}">Ouvrir</a>
-                       
-                        
-                    </div>
-                {% endif %}
-            {% endfor %}
-        </div>
-    {% endfor %}
-</div>
-{%endblock%}
+    <div style="text-align: center; padding: 40px;">
+        <h1>Les formations disponibles</h1>
+         <div class="see-favorites-link">
+        <a href="{{ path('favoris') }}">Voir mes favoris</a>
+    </div>
+    </div>
+    <div style="text-align: center; padding: 40px;">
+        {% set groupSize = 3 %}
+        {% for i in 0..(formation|length-1)//groupSize %}
+            <div class="formation-group">
+                {% for j in 0..groupSize-1 %}
+                    {% set index = i * groupSize + j %}
+                    {% if index < formation|length %}
+                        <div class="formation-box">
+                            <img src="{{ asset('image/formation.avif') }}" alt="Formation Image" class="formation-image" style="display: block; margin: 0 auto; max-width: 200px; height: auto;">
+                            <h2>{{ formation[index].titre }}</h2>
+                            <p style="font-size: 25px;">{{ formation[index].categorie }}</p>
+                            <p style="font-size: 18px;">{{ formation[index].tuteur }}</p>
+                            <p>posté le {{ formation[index].updated }}</p>
+                            <a href="{{ path('formationFront_ressources', { 'id': formation[index].id }) }}">Ouvrir</a>
+                            <form method="post" action="{{ path('ajouter_favoris', {'id': formation[index].id}) }}">
+                                <button type="submit" class="btn btn-primary">Ajouter aux Favoris</button>
+                            </form>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+    
+{% endblock %}

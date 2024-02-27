@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+</br>
+</br>
+</br>
+    <style>
+        .formation-group {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .formation-box {
+            background-color: #f8f8f8;
+            border: 5px solid #9f9f9f;
+            border-radius: 10px;
+            padding: 10px;
+            width: calc(30% - 20px);
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .formation-image {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .remove-favoris-btn {
+            margin-top: 10px;
+        }
+    </style>
+
+    <div style="text-align: center; padding: 40px;">
+        <h1>Vos Formations Favorites</h1>
+    </div>
+    
+    <div style="text-align: center; padding: 40px;">
+        {% if favoris is not empty %}
+            {% set groupSize = 3 %}
+            {% for i in 0..(favoris|length-1)//groupSize %}
+                <div class="formation-group">
+                    {% for j in 0..groupSize-1 %}
+                        {% set index = i * groupSize + j %}
+                        {% if index < favoris|length %}
+                            <div class="formation-box">
+                                <img src="{{ ('image/formation.avif') }}" alt="Formation Image" class="formation-image" style="display: block; margin: 0 auto; max-width: 200px; height: auto;">
+                                <h2>{{ favoris[index].titre }}</h2>
+                                <p style="font-size: 25px;">{{ favoris[index].categorie }}</p>
+                                <p style="font-size: 18px;">{{ favoris[index].tuteur }}</p>
+                                <p>posté le {{ favoris[index].updated }}</p>
+                                <a href="{{ path('formationFront_ressources', { 'id': favoris[index].id }) }}">ouvrir</a>
+                                
+                                <!-- Bouton pour retirer des favoris -->
+                                <form action="{{ path('retirer_favoris', { 'id': favoris[index].id }) }}" method="POST" class="remove-favoris-form">
+                                    <button type="submit" class="remove-favoris-btn">Retirer des Favoris</button>
+                                </form>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>Aucune formation ajoutée aux favoris pour le moment.</p>
+        {% endif %}
+    </div>
+{% endblock %}

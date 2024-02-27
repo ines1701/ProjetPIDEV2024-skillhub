@@ -1,5 +1,21 @@
 {% extends 'baseback.html.twig'%}
+{% block stylesheets %}
+    {{ parent() }}
+   <link rel="stylesheet" href="{{ asset('assetsad/css/style.css') }}">
+ 
+{% endblock %}
 {% block body%}
 <h1>modification du formation</h1>
 {{ form(f) }}
 {%endblock%}
+
+
+
+
+
+
+
+
+
+
+

@@ -56,6 +56,9 @@ class Formation
     #[ORM\OneToMany(targetEntity: Ressource::class, mappedBy: 'formation')]
     private Collection $ressources;
 
+    #[ORM\Column]
+    private ?bool $favoris = null;
+
     public function __construct()
     {
         $this->ressources = new ArrayCollection();
@@ -146,5 +149,17 @@ class Formation
 
     public function __toString(){
         return $this->ressources;
+    }
+
+    public function isFavoris(): ?bool
+    {
+        return $this->favoris;
+    }
+
+    public function setFavoris(bool $favoris): static
+    {
+        $this->favoris = $favoris;
+
+        return $this;
     }
 }

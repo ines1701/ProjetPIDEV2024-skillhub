@@ -131,22 +131,74 @@ public function AfficheFront (FormationRepository $repository)
         // Récupérer les ressources associées à la formation
         $ressources = $formation->getRessources();
 
+
+
         // Afficher la vue avec les ressources
         return $this->render('formation/ressourcesFront.html.twig', [
             'formation' => $formation,
             'ressources' => $ressources,
         ]);
     }
+    #[Route('/ajouter-favoris/{id}', name: 'ajouter_favoris')]
+public function ajouterFavoris(int $id, Request $request): Response
+{
+    $entityManager = $this->getDoctrine()->getManager();
+    $formation = $entityManager->getRepository(Formation::class)->find($id);
 
+    if (!$formation) {
+        throw $this->createNotFoundException('Formation non trouvée.');
+    }
 
+    // Marquer la formation comme favori
+    $formation->setFavoris(true);
+    $entityManager->flush();
 
-
-
-
-
-
-
-
-
-
+    // Rediriger vers la page des formations
+    return $this->redirectToRoute('app_AfficheFront');
 }
+#[Route('/favoris', name: 'favoris')]
+public function favoris(FormationRepository $formationRepository): Response
+{
+    $favoris = $formationRepository->findBy(['favoris' => true]);
+
+    return $this->render('formation/favoris.html.twig', [
+        'favoris' => $favoris,
+    ]);
+}
+
+
+
+#[Route('/retirer-favoris/{id}', name: 'retirer_favoris', methods: ['POST'])]
+public function retirerFavoris(Request $request, $id): Response
+{
+    $entityManager = $this->getDoctrine()->getManager();
+    $formation = $entityManager->getRepository(Formation::class)->find($id);
+
+    if (!$formation) {
+        throw $this->createNotFoundException('Formation non trouvée.');
+    }
+
+    // Retirer la formation des favoris
+    $formation->setFavoris(false);
+    $entityManager->flush();
+
+    // Rediriger vers la page des favoris
+    return $this->redirectToRoute('favoris');
+}
+}
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
