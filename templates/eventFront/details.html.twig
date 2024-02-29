@@ -14,6 +14,7 @@
         body {
             animation: gradientChange 3s infinite;
         }
+
         .view-container {
     display: inline-block;
     background-color: #f8f9fa;
@@ -57,13 +58,10 @@
     <div style="text-align: center; padding: 40px;">
         <h1 style="color: white; text-shadow: 2px 2px 4px rgba(255,255,255,0.7);">Détails de l'événement</h1>
     </div>
-
-      <!-- Afficher le nombre de vues -->
-        <div class="view-container">
+  <div class="view-container">
             <span class="view-label">Nombre de vues :</span>
             <span class="view-value">{{ event.view }}</span>
         </div>
-
     <div style="text-align: center;">
         <h2 style="color: white;">{{ event.titre }}</h2>
         <video controls style="max-width: 80%;">
@@ -73,6 +71,8 @@
         <p style="color: white;">Lieu: {{ event.lieu }}</p>
         <p style="color: white;">Date: {{ event.date ? event.date|date('Y-m-d H:i:s') : '' }}</p>
         <p style="color: white;">Type: {{ event.type }}</p>
+              
+
         <button onclick="window.location.href='{{ path('app_event_index') }}'" class="btn custom-green">retour</button>
     </div>
 
