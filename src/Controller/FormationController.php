@@ -6,7 +6,7 @@ use App\Entity\Formation;
 use App\Entity\Ressource;
 use App\Form\FormformationType;
 use App\Repository\FormationRepository;
-
+use Knp\Component\Pager\PaginatorInterface;
 use App\Repository\RessourceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,8 +15,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+
+
+
+
+
 class FormationController extends AbstractController
 {
+    
     #[Route('/formation', name: 'app_formation')]
     public function index(): Response
     {
@@ -81,16 +87,25 @@ public function delete($id, FormationRepository $repository,EntityManagerInterfa
     $em->flush();
     return $this->redirectToRoute('app_Affiche');
 }
-
-
 #[Route('/AfficheFront', name: 'app_AfficheFront')]
+public function AfficheFront(FormationRepository $repository, PaginatorInterface $paginator, Request $request): Response
+{
+    $formations = $repository->findAll();
+
+    $pagination = $paginator->paginate(
+        $formations,
+        $request->query->getInt('page', 1), // numéro de page par défaut
+        3 // nombre d'éléments par page
+    );
+
+    return $this->render('formation/AfficheFront.html.twig', [
+        'formation' => $pagination,
+    ]);
+}
 
 
-public function AfficheFront (FormationRepository $repository)
-    {
-        $formation=$repository->findAll() ; //select *
-        return $this->render('formation/AfficheFront.html.twig',['formation'=>$formation]);
-    }
+
+
     #[Route('/formation/{id}/ressources', name: 'formation_ressources')]
 
 
@@ -185,6 +200,7 @@ public function retirerFavoris(Request $request, $id): Response
     // Rediriger vers la page des favoris
     return $this->redirectToRoute('favoris');
 }
+
 }
 
 

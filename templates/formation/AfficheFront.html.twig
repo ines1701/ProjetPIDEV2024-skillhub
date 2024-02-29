@@ -18,28 +18,59 @@
             width: calc(30% - 20px);
             box-sizing: border-box;
             position: relative;
-           
         }
 
-        
-        
-         .formation-image {
+        .formation-image {
             display: block;
             margin-bottom: 10px;
         }
-         .see-favorites-link {
+
+        .see-favorites-link {
             text-align: right;
             padding: 20px;
         }
-           
+
+        .search-form {
+            margin: 20px auto;
+            max-width: 500px;
+            padding: 20px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            background-color: #f8f8f8;
+        }
+
+        .search-form label {
+            font-weight: bold;
+        }
+
+        .search-form select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+        }
+
+        .search-form button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
     </style>
 
     <div style="text-align: center; padding: 40px;">
         <h1>Les formations disponibles</h1>
-         <div class="see-favorites-link">
-        <a href="{{ path('favoris') }}">Voir mes favoris</a>
+        <div class="see-favorites-link">
+            <a href="{{ path('favoris') }}">Voir mes favoris</a>
+        </div>
     </div>
-    </div>
+    
+    
+
+   
     <div style="text-align: center; padding: 40px;">
         {% set groupSize = 3 %}
         {% for i in 0..(formation|length-1)//groupSize %}
@@ -63,5 +94,15 @@
             </div>
         {% endfor %}
     </div>
+
+    <div style="display: flex; justify-content: center; align-items: center; ">
+        <div style="border: 5px solid #000; padding: 5px;  background-color: #f8f8f8;
+                border: 2px solid 	#9f9f9f;
+                border-radius: 10px;
+                padding: 10px; ">
+            {{ knp_pagination_render(formation) }}
+        </div>
+    </div>
+
     
 {% endblock %}

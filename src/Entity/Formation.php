@@ -12,6 +12,7 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Regex;
 
 
+
 #[ORM\Entity(repositoryClass: FormationRepository::class)]
 class Formation
 {
