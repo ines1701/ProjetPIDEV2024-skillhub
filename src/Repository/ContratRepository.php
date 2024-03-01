@@ -28,6 +28,20 @@ class ContratRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+    /**
+     * Recherche les logements par adresse.
+     *
+     * @param string $adresse L'adresse à rechercher
+     * @return Logement[] Retourne un tableau de logements correspondant à l'adresse
+     */
+    public function findByAdresse(string $nomclient): array
+    {
+        return $this->createQueryBuilder('l')
+            ->andWhere('l.nom_client LIKE :adresse')
+            ->setParameter('nom_client', '%'.$nomclient.'%')
+            ->getQuery()
+            ->getResult();
+    }
 
 //    /**
 //     * @return Contrat[] Returns an array of Contrat objects

@@ -12,6 +12,11 @@
             <button class="btn btn-primary btn-sm" type="submit">Search</button>
         </form>
 <br>
+{% for flashMessage in app.flashes('success') %}
+            <div class="alert alert-success" role="alert">
+                {{ flashMessage }}
+            </div>
+{% endfor %}
     <table class="table table-bordered" style="border-color:black">
         <thead>
             <tr  style="border-color:black">
@@ -45,6 +50,16 @@
         {% endfor %}
         </tbody>
     </table>
+    
+
+
+
+    
+<nav  >
+    <ul class="pagination">
+     {{ knp_pagination_render(contrats) }}
+    </ul>
+</nav>
 </main><!-- End #main -->
     
 {% endblock %}

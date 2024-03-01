@@ -50,7 +50,7 @@ public function index(Request $request, ContratRepository $contratRepository): R
         $contrat = new Contrat();
         $form = $this->createForm(ContratType::class, $contrat);
         $form->handleRequest($request);
-
+        $this->addFlash('success', ' New contrat Added.');
         if ($form->isSubmitted() && $form->isValid()) {
             $file = $request->files->get('contrat')['image'];
                 // $file=$jeux->getImagejeux();
@@ -66,6 +66,7 @@ public function index(Request $request, ContratRepository $contratRepository): R
 
             return $this->redirectToRoute('app_contrat_index', [], Response::HTTP_SEE_OTHER);
         }
+        
 
         return $this->renderForm('contrat/new.html.twig', [
             'contrat' => $contrat,
@@ -137,4 +138,48 @@ public function index(Request $request, ContratRepository $contratRepository): R
             // Output the generated PDF to Browser (force download)
             return new Response($dompdf->stream($filename, ["Attachment" => true]));
         }
+        #[Route('/searchByNomclient', name: 'search_by_nomclient', methods: ['GET'])]
+    public function searchByNomclient(Request $request, ContratRepository $contratRepository): JsonResponse
+    {
+        $nomclient = $request->query->get('nom_client');
+    
+        // Recherche des logements par adresse
+        $contrats = $contratRepository->findByNomclient($nomclient);
+    
+        // Convertir les entités Logement en tableau pour la réponse JSON
+        $results = [];
+        foreach ($contrats as $contrat) {
+            $results[] = [
+                'id' => $contrat->getId(),
+                'nom_client' => $contrat->getDescription(),
+                'date_contrat' => $contrat->getDateContrat(),
+                'montant' => $contrat->getMontant(),
+                'description' => $contrat->getDescription(),
+                'image' => $contrat->getImage()
+            ];
+        }
+    
+        return $this->json($results);
+    }
+    #[Route('/loadAllContrats', name: 'load_all_contrats', methods: ['GET'])]
+public function loadAllLogements(ContratRepository $contratRepository): JsonResponse
+{
+    // Récupérer tous les logements depuis le repository
+    $contrats = $contratRepository->findAll();
+
+    // Convertir les entités Logement en tableau pour la réponse JSON
+    $results = [];
+    foreach ($contrats as $contrat) {
+        $results[] = [
+                'id' => $contrat->getId(),
+                'nom_client' => $contrat->getDescription(),
+                'date_contrat' => $contrat->getDateContrat(),
+                'montant' => $contrat->getMontant(),
+                'description' => $contrat->getDescription(),
+                'image' => $contrat->getImage()
+        ];
+    }
+
+    return $this->json($results);
+}
 }

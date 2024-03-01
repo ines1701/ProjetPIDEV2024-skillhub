@@ -3,10 +3,11 @@
 {% block title %}Contrat index{% endblock %}
 
 {% block body %}
-<br><br>
+<br>
 
     <h1 style="color:green; text-align: center;">Contrat</h1>
-
+<button class="btn" style="background-color:#2E4053  ;border-color: black;color: purple;margin-left:80%"><a href="{{ path('print_pdf') }}">print</a></button>
+<br><br>
     <table class="table table-bordered" style="border-color:black;width:70%;margin-left:15%">
         <thead>
             <tr style="border-color:black">
@@ -67,5 +68,81 @@
                         {% endif %}
                     </ul>
                 </nav>
-<center> <button class="btn" style="background-color:#2E4053  ;border-color: black;color: purple"><a href="{{ path('print_pdf') }}">print</a></button></center>
+                {% block javascripts %}
+    {{ parent() }}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+   $(document).ready(function(){
+     // Fonction pour charger tous les logements
+    function loadAllContrats() {
+        $.ajax({
+            type: 'GET',
+            url: '{{ path('load_all_contrats') }}',
+            success: function(data){
+                updateTable(data);
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
+    // Charger tous les logements au chargement de la page
+    loadAllContrats();
+
+
+    $('#search-nomclient').keyup(function(){
+        var nomclient = $(this).val();
+
+        if(nomclient != ""){
+            $.ajax({
+                type: 'GET',
+                url: '{{ path('search_by_nomclient') }}',
+                data: {'nomclient': nomclient},
+                success: function(data){
+                    if(data.length > 0){
+                        updateTable(data);
+                    } else {
+                        $('#search-results').html("<p style='font-size: 14px; text-align: center; margin-top: 10px'>Aucun contrat trouvé pour ce nom du client.</p>");
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        } else {
+            // Si le champ de recherche est vide, réinitialisez le tableau pour afficher tous les logements
+            updateTable([]);
+        }
+    });
+});
+// Déclarer une variable pour stocker le contenu initial du tableau
+var initialTableContent = $('#contrat-table-body').html();
+
+function updateTable(results) {
+    var html = '';
+
+    if (results.length > 0) {
+        results.forEach(function(contrat) {
+            html += '<tr>';
+            html += '<td>' + contrat.id + '</td>';
+            html += '<td>' + contrat.Nom_client + '</td>';
+            html += '<td>' + contrat.Date_contrat + '</td>';
+            html += '<td>' + contrat.montant + '</td>';
+            html += '<td>' + contrat.description + '</td>';
+            html += '<td>' + contrat.image + '</td>';
+            
+        });
+    } else {
+        html += '<tr><td colspan="7">Aucun contrat trouvé pour ce nom du client.</td></tr>';
+    }
+
+    // Placer le contenu initial avant le message "Aucun contrat trouvé"
+    html = initialTableContent + html;
+
+    $('#contrat-table-body').html(html);
+}
+
+ </script>
+{% endblock %}
 {% endblock %}

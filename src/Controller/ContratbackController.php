@@ -10,27 +10,29 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\PaginatorInterface;
 
 #[Route('/contratback/controller')]
 class ContratbackController extends AbstractController
 {
     #[Route('/', name: 'app_contratback_controller_index', methods: ['GET'])]
-public function index(Request $request, ContratRepository $contratRepository): Response
+public function index(Request $request, ContratRepository $contratRepository,PaginatorInterface $paginator): Response
 {
     $searchQuery = $request->query->get('q');
-
-    
     $contratQuery = $contratRepository->findAll();
-
-    
     if ($searchQuery) {
         $contratQuery = $contratRepository->searchContrat($searchQuery);
     }
-
-    
+    $pagination = $paginator->paginate(
+        $contratRepository->findAll(), // La requête ou le query builder, pas le résultat
+        $request->query->get('page', 1), // Numéro de la page en cours, 1 par défaut
+        5 // Nombre de résultats par page
+    ); 
     return $this->render('contratback/index.html.twig', [
         'contrats' => $contratQuery, 
         'searchQuery' => $searchQuery, 
+        'contrats' => $pagination,
+        
     ]);
 }
 

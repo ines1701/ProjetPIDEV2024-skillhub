@@ -4,3 +4,7 @@
 print_pdf:
     path: /printpdf
     controller: App\Controller\ContratController::printPdf
+search_by_nomclient:
+    path: /searchByNomclient
+    controller: App\Controller\ContratController::searchByNomclient
+    # config/routes.yaml
