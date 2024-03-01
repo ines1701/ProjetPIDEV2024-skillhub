@@ -21,6 +21,25 @@ class FormationRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Formation::class);
     }
+      /**
+     * Récupère les catégories distinctes des formations.
+     *
+     * @return array
+     */
+    public function findDistinctCategories(): array
+    {
+        $qb = $this->createQueryBuilder('f')
+            ->select('DISTINCT f.categorie');
+
+        $result = $qb->getQuery()->getResult();
+
+        $categories = [];
+        foreach ($result as $value) {
+            $categories[] = $value['categorie'];
+        }
+
+        return $categories;
+    }
 
 //    /**
 //     * @return Formation[] Returns an array of Formation objects

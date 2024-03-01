@@ -90,7 +90,18 @@ public function delete($id, FormationRepository $repository,EntityManagerInterfa
 #[Route('/AfficheFront', name: 'app_AfficheFront')]
 public function AfficheFront(FormationRepository $repository, PaginatorInterface $paginator, Request $request): Response
 {
-    $formations = $repository->findAll();
+    $categories = $repository->findDistinctCategories();
+    
+    // Récupérer le paramètre de catégorie de l'URL
+    $categorie = $request->query->get('categorie');
+
+    // Si une catégorie est sélectionnée, filtrer les formations par cette catégorie
+    if ($categorie) {
+        $formations = $repository->findBy(['categorie' => $categorie]);
+    } else {
+        // Sinon, afficher toutes les formations
+        $formations = $repository->findAll();
+    }
 
     $pagination = $paginator->paginate(
         $formations,
@@ -100,6 +111,8 @@ public function AfficheFront(FormationRepository $repository, PaginatorInterface
 
     return $this->render('formation/AfficheFront.html.twig', [
         'formation' => $pagination,
+        'categories' => $categories,
+        'categorieSelectionnee' => $categorie,
     ]);
 }
 
