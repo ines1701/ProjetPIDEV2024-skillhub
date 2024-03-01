@@ -11,6 +11,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\HttpFoundation\File\File;
+use VictorPrdh\RecaptchaBundle\Form\ReCaptchaType;
 
 class CondidatureFormType extends AbstractType
 {
@@ -24,6 +25,7 @@ class CondidatureFormType extends AbstractType
             ->add('numTel')
             ->add('lettremotivation', FileType::class, array('label' => 'Lettre de motivation'))
             ->add('cv', FileType::class, array('label' => 'Curriculum vitae(CV)'))
+            ->add("recaptcha", ReCaptchaType::class)
             ->add('Postuler',SubmitType::class);
     }
 

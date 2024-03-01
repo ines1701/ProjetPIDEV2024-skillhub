@@ -22,6 +22,7 @@
                     <th scope="col">Lettre de motivation</th>
                     <th scope="col">Curriculum vittae</th>
                     <th scope="col">ID du projet</th>
+                    <th scope="col">Status</th>
                     <th scope="col">Actions</th>
                   </tr>
                 </thead>
@@ -35,6 +36,7 @@
                         <td> {{ c.lettremotivation }}</td>
                         <td> {{ c.cv }}</td>
                         <td> {{ c.projectId }}</td>
+                        <td> {{ c.status }}</td>
                         <td>
                             <a href="{{ path('app_dC', {'id': c.id}) }}">Supprimer | </a>
                             <a href="{{ path('app_dC', {'id': c.id}) }}">Accepter</a>

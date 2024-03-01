@@ -116,7 +116,7 @@
                             </div>
                             <h3><a href="{{ path('app_detailProject', {'id': project.id})}}">{{ project.titre }}</a></h3>
                             <br/>
-                            <p><b>Publié par : </b></p>
+                            <p><b>Ajouté le : </b> {{ project.createdAT|date('d-m-Y') }} </p>
                             
                         </div>
                     </div>

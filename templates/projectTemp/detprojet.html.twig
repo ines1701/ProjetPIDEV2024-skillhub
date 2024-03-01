@@ -1,11 +1,12 @@
 {% extends 'base.html.twig' %}
+
 {% block body %}
 <!-- ======= Breadcrumbs ======= -->
-    <div class="breadcrumbs" data-aos="fade-in">
-      <div class="container">
-        <h2>Détails du projet</h2>
-      </div>
-    </div><!-- End Breadcrumbs -->
+<div class="breadcrumbs" data-aos="fade-in">
+  <div class="container">
+    <h2>Détails du projet</h2>
+  </div>
+</div><!-- End Breadcrumbs -->
 <br><br>
 <section id="course-details" class="course-details">
       <div class="container" data-aos="fade-up">
@@ -48,14 +49,35 @@
 </div>
 </div>
 </section>
+{% if not hasCondidature %}
+  <center>
+    <a class="btn btn-success text-white" href="{{ path('app_condidature', {'id': p.id}) }}">Postuler</a>
+  </center>
+{% endif %}
 
+{% if condidature %}
+  {% if condidature.status == 'accepted' %}
+    <center>
+      <p>Condidature acceptée!</p>
+      <a class="btn btn-primary text-white" href="{{ path('your_accept_page', {'id': p.id}) }}">Accédez au paiement .</a>
+    </center>
+  {% elseif condidature.status == 'refused' %}
+    <center>
+      <p>Condidature refusée!</p>
+    </center>
+  {% endif %}
+{% endif %}
 
+{% if hasCondidature %}
+  <center>
+    <p>Vous avez déjà postulé!</p>
+  </center>
+{% else %}
+{% endif %}
 
-
-<center>
-<a class="btn btn-success text-white" href="{{path('app_condidature',{'id' : p.id})}}">Postuler</a>
 <br><br>
-<a href="{{path('app_All')}}">Back to list</a>
-
+<center>
+<a href="{{ path('app_All') }}">Back to list</a>
 </center>
+
 {% endblock %}

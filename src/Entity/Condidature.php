@@ -171,4 +171,19 @@ class Condidature
         $this->project_id = $projectId;
         return $this;
     }
+
+    #[ORM\Column(length: 255)]
+    private ?string $status = 'En cours'; // Set a default status
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
 }

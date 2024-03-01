@@ -72,13 +72,12 @@
                         <td> {{ c.cv }}</td>
                         <td> {{ c.projectId }}</td>
                         <td>
-                            <a href="{{ path('app_dC', {'id': c.id}) }}">Supprimer | </a>
-                            <a href="{{ path('app_dC', {'id': c.id}) }}">Accepter</a>
+                            <a href="{{ path('app_accept_condidature', {'projectId': p.id, 'condidatureId': c.id}) }}">Accepter | </a>
+                            <a href="{{ path('app_refuse_condidature', {'projectId': p.id, 'condidatureId': c.id}) }}">Refuser</a>
                         </td>
                 </tbody> {% endfor %}
               </table>
 <center>
-
 <br><br>
 <a href="{{path('app_Mine')}}">Back to list</a>
 

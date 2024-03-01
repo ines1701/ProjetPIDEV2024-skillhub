@@ -16,6 +16,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 class HomeController extends AbstractController
 {
@@ -88,19 +89,48 @@ class HomeController extends AbstractController
 public function delete($id, ProjectRepository $repository,EntityManagerInterface $em)
 {
 $projet = $repository->find($id);
+
+if (!$projet) {
+    throw $this->createNotFoundException('Project not found');
+}
+
+// Fetch associated condidatures
+$condidatures = $projet->getCondidatures();
+
+// Remove each condidature
+foreach ($condidatures as $condidature) {
+    $em->remove($condidature);
+}
+
 $em->remove($projet);
 $em->flush();
 return $this->redirectToRoute('app_All');
 }
 #[Route('/projectdetails/{id}', name: 'app_detailProject')]
-public function showProject($id, ProjectRepository $repository)
+public function showProject($id, ProjectRepository $repository, CondidatureRepository $condidatureRepository, Security $security)
 {
     $projet = $repository->find($id);
     if (!$projet) {
         return $this->redirectToRoute('app_All');
     }
+    $user = $security->getUser();
+    $hasCondidature = false;
+    $condidature = null;
 
-    return $this->render('projectTemp/detprojet.html.twig', ['p' => $projet]);
+    if ($user) {
+        // Check if the user has already submitted a condidature for this project
+        $condidature = $condidatureRepository->findOneBy(['project' => $projet, 'user' => $user]);
+
+        if ($condidature) {
+            $hasCondidature = true;
+        }
+    }
+
+    return $this->render('projectTemp/detprojet.html.twig', [
+        'p' => $projet,
+        'hasCondidature' => $hasCondidature,
+        'condidature' => $condidature,
+    ]);
 }
 
 #[Route('/ShowCondidature', name: 'app_condidature')]
@@ -187,7 +217,44 @@ public function showProject($id, ProjectRepository $repository)
             $condidature=$condidatureRep->showAllCondidaturesByProject($id) ;
             
             return $this->render('projectTemp/detcondidature.html.twig',['p'=>$project , 'condidature'=>$condidature]);
+}
+
+
+#[Route('/acceptCond/{projectId}/{condidatureId}', name: 'app_accept_condidature', methods: ['GET'])]
+public function acceptCondidature($projectId, $condidatureId, EntityManagerInterface $em): Response
+{
+    $condidature = $this->getDoctrine()->getRepository(Condidature::class)->find($condidatureId);
+
+    if (!$condidature) {
+        throw $this->createNotFoundException('Condidature not found.');
     }
+
+    // Add logic to handle acceptance
+    $condidature->setStatus('Acceptée');
+    $em->flush();
+
+    // Redirect or return a response based on your requirements
+    return $this->redirectToRoute('app_detailProject', ['id' => $projectId]);
+}
+
+#[Route('/refuseCond/{projectId}/{condidatureId}', name: 'app_refuse_condidature', methods: ['GET'])]
+public function refuseCondidature($projectId, $condidatureId, EntityManagerInterface $em): Response
+{
+    $condidature = $this->getDoctrine()->getRepository(Condidature::class)->find($condidatureId);
+
+    if (!$condidature) {
+        throw $this->createNotFoundException('Condidature not found.');
+    }
+
+    // Add logic to handle refusal
+    $condidature->setStatus('Refusée');
+    $em->flush();
+
+    // Redirect or return a response based on your requirements
+    return $this->redirectToRoute('app_detailProject', ['id' => $projectId]);
+}
+
+
 }
     
 
