@@ -34,7 +34,21 @@
     </table>
 
    <button class="btn btn-primary btn-sm"> <a href="{{ path('app_contratback_controller_index') }}"style="color:white">back to list</a></button>
-
+<br>
+<div>
+               <form method="post" action="{{ path('generate_qr_code', {'id': contrat.id}) }}">
+                   <input type="hidden" name="text" value="
+                       nomclient: {{ contrat.nomclient }}
+                       datecontrat: {{ contrat.datecontrat ? contrat.dateContrat|date('Y-m-d') : '' }}
+                       montant: {{ contrat.montant }}
+                       description: {{ contrat.description }}
+                       image:  img src="{{ asset('uploads/' ~ contrat.image) }}" 
+                   ">
+                  <button type="submit" class="btn btn-primary btn-sm">Generate QR Code</button>
+               </form>
+           </div>
+       </div>
+   </div>
     
 
     

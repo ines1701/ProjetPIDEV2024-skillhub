@@ -11,6 +11,21 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
+use Endroid\QrCode\QrCode;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+use Endroid\QrCode\Builder\BuilderInterface;
+use Endroid\QrCode\Encoding\Encoding;
+use Endroid\QrCode\Response\QrCodeResponse;
+use Endroid\QrCode\Logo\Logo;
+use Endroid\QrCode\Label\Label;
+use Endroid\QrCode\Color\Color;
+use Endroid\QrCode\Label\Alignment\LabelAlignmentLeft;
+use Endroid\QrCode\ErrorCorrectionLevel;
+use Endroid\QrCode\Label\LabelAlignment;
+use Endroid\QrCode\Writer\PngWriter;
+
 
 #[Route('/contratback/controller')]
 class ContratbackController extends AbstractController
@@ -35,7 +50,31 @@ public function index(Request $request, ContratRepository $contratRepository,Pag
         
     ]);
 }
+#[Route('/generate_qr_code', name: 'generate_qr_code', methods: ['POST'])]
+    public function generateQrCode(Request $request): Response
+    {
+        $text = $request->request->get('text');
+        $qrCode = QrCode::create($text)
+            ->setSize(600)
+            ->setMargin(40)
+            ->setForegroundColor(new Color(0, 0, 128)) // Dark blue foreground color
+            ->setBackgroundColor(new Color(153, 204, 255))
+            ->setErrorCorrectionLevel(ErrorCorrectionLevel::High); // Set error correction level to HIGH
 
+        // Create label
+        $label = Label::create("SkillHub")
+            ->setTextColor(new Color(255, 0, 0)) // Red text color
+            ->setAlignment(LabelAlignment::Left); // Align label to left
+
+        // Create PNG writer
+        $writer = new PngWriter();
+
+        // Write QR code to PNG image with label
+        $result = $writer->write($qrCode, label: $label);
+
+        // Output QR code image to the browser
+        return new Response($result->getString(), Response::HTTP_OK, ['Content-Type' => $result->getMimeType()]);
+    }
 
     #[Route('/new', name: 'app_contratback_controller_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response

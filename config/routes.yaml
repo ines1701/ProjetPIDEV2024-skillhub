@@ -7,4 +7,3 @@ print_pdf:
 search_by_nomclient:
     path: /searchByNomclient
     controller: App\Controller\ContratController::searchByNomclient
-    # config/routes.yaml

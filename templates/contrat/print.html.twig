@@ -8,11 +8,11 @@
 </head>
 <body>
 <header class="clearfix">
-    
-    <h1 align="center"> Contrats </h1>
+    <h1 class="logo me-auto" style="color:green">SKILLHUB</h1>
+    <h1 align="center"> Liste des Contrats </h1>
     <hr></hr>
     
-    <table class="table">
+    <table class="table table-bordered" style="border-color:black;width:70%;margin-left:15%">
         <thead>
             <tr>
                 
@@ -20,6 +20,7 @@
                 <th style="background-color:green;color :white">Date_contrat</th>
                 <th style="background-color:green;color :white">Montant</th>
                 <th style="background-color:green;color :white">Description</th>
+                <th style="background-color:green;color :white">image</th>
                 
             </tr>
         </thead>
@@ -30,7 +31,8 @@
                 <td>{{ contrat.dateContrat ? contrat.dateContrat|date('Y-m-d') : '' }}</td>
                 <td>{{ contrat.montant }}</td>
                 <td>{{ contrat.description }}</td>
-                
+                <td>{% set imagePath = absolute_url('uploads/' ~ contrat.image) %}
+<img src="{{ imagePath }}" width="100" height="100"></td>
             </tr>
         {% else %}
             <tr>

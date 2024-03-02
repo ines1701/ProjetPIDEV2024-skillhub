@@ -32,17 +32,21 @@ class ContratRepository extends ServiceEntityRepository
      * Recherche les logements par adresse.
      *
      * @param string $adresse L'adresse à rechercher
-     * @return Logement[] Retourne un tableau de logements correspondant à l'adresse
+     * @return Contrat[] Retourne un tableau de logements correspondant à l'adresse
      */
-    public function findByAdresse(string $nomclient): array
-    {
+    public function findByNomClient(string $nomclient): array
+{
+    try {
         return $this->createQueryBuilder('l')
-            ->andWhere('l.nom_client LIKE :adresse')
+            ->andWhere('l.nom_client LIKE :nom_client')
             ->setParameter('nom_client', '%'.$nomclient.'%')
             ->getQuery()
             ->getResult();
+    } catch (\Doctrine\ORM\ORMException $e) {
+        // Log l'erreur ou gérer selon le besoin
+        throw new \Exception("Une erreur est survenue lors de la recherche par nom de client.");
     }
-
+}
 //    /**
 //     * @return Contrat[] Returns an array of Contrat objects
 //     */

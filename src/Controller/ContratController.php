@@ -13,6 +13,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 
 #[Route('/contrat')]
 class ContratController extends AbstractController
@@ -151,7 +153,7 @@ public function index(Request $request, ContratRepository $contratRepository): R
         foreach ($contrats as $contrat) {
             $results[] = [
                 'id' => $contrat->getId(),
-                'nom_client' => $contrat->getDescription(),
+                'nom_client' => $contrat->getNomClient(),
                 'date_contrat' => $contrat->getDateContrat(),
                 'montant' => $contrat->getMontant(),
                 'description' => $contrat->getDescription(),
@@ -172,11 +174,13 @@ public function loadAllLogements(ContratRepository $contratRepository): JsonResp
     foreach ($contrats as $contrat) {
         $results[] = [
                 'id' => $contrat->getId(),
-                'nom_client' => $contrat->getDescription(),
+                'nom_client' => $contrat->getNomClient(),
                 'date_contrat' => $contrat->getDateContrat(),
                 'montant' => $contrat->getMontant(),
                 'description' => $contrat->getDescription(),
-                'image' => $contrat->getImage()
+                'image' => $this->generateUrl('uploads', ['path' => 'uploads/' . $contrat->getImage()]), // Assuming you have a route named 'uploads'
+                'showPath' => $router->generate('app_contrat_show', ['id' => $contrat->getId()]),
+                'editPath' => $router->generate('app_contrat_edit', ['id' => $contrat->getId()]),
         ];
     }
 
