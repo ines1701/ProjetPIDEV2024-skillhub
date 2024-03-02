@@ -59,7 +59,7 @@
   {% if condidature.status == 'accepted' %}
     <center>
       <p>Condidature acceptée!</p>
-      <a class="btn btn-primary text-white" href="{{ path('PATH_JASSEM', {'id': p.id}) }}">Accédez au paiement .</a>
+      <a class="btn btn-primary text-white" href="{{ path('your_accept_page', {'id': p.id}) }}">Accédez au paiement .</a>
     </center>
   {% elseif condidature.status == 'refused' %}
     <center>

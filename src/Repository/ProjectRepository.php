@@ -21,6 +21,28 @@ class ProjectRepository extends ServiceEntityRepository
         parent::__construct($registry, Project::class);
     }
 
+    /**
+     * Search projects by title.
+     *
+     * @param string $query The search query
+     *
+     * @return Project[] The matching projects
+     */
+    public function searchProjects(string $query): array
+    {
+        $queryBuilder = $this->createQueryBuilder('p');
+
+        // Add a WHERE clause to filter projects by title
+        $queryBuilder
+            ->andWhere($queryBuilder->expr()->like('p.titre', ':query'))
+            ->setParameter('query', '%' . $query . '%');
+
+        // You can add more conditions or customize the search logic as needed
+
+        // Execute the query and return the results
+        return $queryBuilder->getQuery()->getResult();
+    }
+
 //    /**
 //     * @return Project[] Returns an array of Project objects
 //     */

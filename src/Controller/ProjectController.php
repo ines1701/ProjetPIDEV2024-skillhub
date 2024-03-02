@@ -19,7 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class HomeController extends AbstractController
+class ProjectController extends AbstractController
 {
     #[Route('/home', name: 'app_home')]
     public function index(): Response
