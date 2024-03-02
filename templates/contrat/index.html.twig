@@ -5,10 +5,24 @@
 {% block body %}
     <br>
     <h1 style="color:green; text-align: center;">Contrat</h1>
-    <button class="btn" style="background-color:#2E4053;border-color: black;color: purple;margin-left:80%">
-        <a href="{{ path('print_pdf') }}" style="color:white;">print</a>
+    <ul style="list-style-type: none; display: flex; justify-content: flex-end; gap: 730px; padding-right: 15%;">
+  <li>
+    <button class="btn" style="background-color:#2E4053; border-color: black; color: purple;">
+      <a href="{{ path('print_pdf') }}" style="color:white;">print</a>
     </button>
     <br><br>
+    <button class="btn btn-success btn-sm">
+            <a href="{{ path('app_contrat_new') }}" style="color:white;text-align:center;">ajouter contrat</a>
+    </button>
+  </li> 
+  <li>
+    <button class="btn btn-success btn-sm">
+      <a href="{{ path('app_transaction_index') }}" style="color:white; text-align:center;">Transaction</a>
+    </button>
+  </li>
+</ul>
+
+    
     
         <div class="search-container">
            <input type="text" id="search_by_nomclient" placeholder="Rechercher par nomclient..." class="form-control" style="width: 50%; margin: 0 auto; display: block;">
@@ -54,40 +68,11 @@
         </tbody>
     </table>
 
-    <center>
-        <button class="btn btn-success btn-sm">
-            <a href="{{ path('app_contrat_new') }}" style="color:white;text-align:center;">ajouter</a>
-        </button>
-    </center>
+    
     <br>
-    <center>
-        <button class="btn btn-success btn-sm">
-            <a href="{{ path('app_transaction_index') }}" style="color:white;text-align:center;">Transaction</a>
-        </button>
-    </center>
+    
 
-    {# Manual pagination controls #}
-    <nav aria-label="Page navigation">
-        <ul class="pagination justify-content-center">
-            {% if currentPage > 1 %}
-                <li class="page-item">
-                    <button class="btn btn-success btn-sm page-link" href="{{ path('app_contrat_index', {'page': currentPage - 1}) }} style="color:green" ">Previous</button>
-                </li>
-            {% endif %}
-            
-            {% for page in 1..totalPages %}
-                <li class="page-item{% if page == currentPage %} active{% endif %}">
-                    <button class="btn btn-success btn-sm page-link" href="{{ path('app_contrat_index', {'page': page}) }}">{{ page }}</button>
-                </li>
-            {% endfor %}
-            
-            {% if currentPage < totalPages %}
-                <li class="page-item">
-                    <button class="btn btn-success btn-sm page-link" href="{{ path('app_contrat_index', {'page': currentPage + 1}) }}">Next</button>
-                </li>
-            {% endif %}
-        </ul>
-    </nav>
+    
 {% endblock %}
 
 {% block javascripts %}

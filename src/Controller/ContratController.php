@@ -29,19 +29,11 @@ class ContratController extends AbstractController
 public function index(Request $request, ContratRepository $contratRepository): Response
 {
     $contratQuery = $contratRepository->findAll(); 
-    $currentPage = $request->query->getInt('page', 1); 
-    $perPage = 5; 
-    $totalcontrat = count($contratQuery); 
-    $totalPages = ceil($totalcontrat / $perPage); 
-    $offset = ($currentPage - 1) * $perPage; 
-    $contrats = array_slice($contratQuery, $offset, $perPage); 
+    
 
     return $this->render('contrat/index.html.twig', [
-        'contrats' => $contrats, 
-        'totalcontrat' => $totalcontrat,
-        'perPage' => $perPage,
-        'currentPage' => $currentPage,
-        'totalPages' => $totalPages,
+        'contrats' => $contratQuery, 
+        
     ]);
 }
 
