@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ event.titre }}{% endblock %}
+
+{% block content %}
+<br></br><br></br>
+<link rel="stylesheet" href="{{ asset('/form.css') }}">
+    <h1>{{ event.titre }}</h1>
+ 
+<div style="margin-top: 20px; text-align: center;">
+    <h2>Inscriptions</h2>
+    <ul>
+    
+        {% for Inscrip in event.inscription %}
+            <li>{{ Inscrip.email }}</li>
+            <li>{{ Inscrip.num }}</li>
+             <form action="{{ path('app_event_send', {'id': event.id}) }}" method="post">
+            <button type="submit">Envoyer un e-mail de confirmation</button>
+        </form>
+        {% endfor %}
+
+    </ul>
+
+    
+
+    {% for Inscrip in event.inscription %}
+        <form action="{{ path('app_event_inscription_delete', {'id': Inscrip.id}) }}" method="post" style="display: inline;">
+            <input type="hidden" name="_method" value="DELETE">
+            <button type="submit">Supprimer</button>
+        </form>
+    {% endfor %}
+
+
+
+
+</div>
+{% endblock %}

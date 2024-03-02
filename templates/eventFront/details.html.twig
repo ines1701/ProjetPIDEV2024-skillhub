@@ -55,6 +55,11 @@
 {% block body %}
     <br></br>
     <br></br>
+
+
+
+
+
     <div style="text-align: center; padding: 40px;">
         <h1 style="color: white; text-shadow: 2px 2px 4px rgba(255,255,255,0.7);">Détails de l'événement</h1>
     </div>
@@ -75,6 +80,18 @@
 
         <button onclick="window.location.href='{{ path('app_event_index') }}'" class="btn custom-green">retour</button>
     </div>
+
+ <div style="text-align: center; padding: 40px;">
+        <h1 style="color: white; text-shadow: 2px 2px 4px rgba(255,255,255,0.7);">inscription</h1>
+   
+<form action="{{ path('app_event_Inscrip', {'id': event.id}) }}" method="post">
+    <label for="email">Votre e-mail :</label>
+    <input type="email" id="email" name="email" required>
+     <label for="num">Votre numéro :</label>
+    <input type="tel" id="num" name="num" required>
+    <button type="submit">S'inscrire</button>
+</form>
+ </div>
 
     
 

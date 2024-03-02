@@ -81,6 +81,14 @@ class Event
     #[ORM\Column(nullable: true)]
     private ?int $view = 0;
 
+    #[ORM\OneToMany(mappedBy: 'event', targetEntity: Inscrip::class)]
+    private Collection $inscription;
+
+    public function __construct()
+    {
+        $this->inscription = new ArrayCollection();
+    }
+
    
 
 
@@ -205,7 +213,38 @@ class Event
 
         return $this;
     }
-   
 
-    
+    /**
+     * @return Collection<int, Inscrip>
+     */
+    public function getInscription(): Collection
+    {
+        return $this->inscription;
+    }
+
+    public function addInscription(Inscrip $inscription): static
+    {
+        if (!$this->inscription->contains($inscription)) {
+            $this->inscription->add($inscription);
+            $inscription->setEvent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInscription(Inscrip $inscription): static
+    {
+        if ($this->inscription->removeElement($inscription)) {
+            // set the owning side to null (unless already changed)
+            if ($inscription->getEvent() === $this) {
+                $inscription->setEvent(null);
+            }
+        }
+
+        return $this;
+    }
+   
+ 
+  
+
 }
