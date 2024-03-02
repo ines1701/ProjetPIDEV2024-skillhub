@@ -29,7 +29,9 @@
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
 
-  
+    <!-- POUR AJAX -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 
 </head>
 
@@ -60,6 +62,50 @@
             bottom: 10px;
             right: 10px;
         }
+        #search-container {
+    max-width: 400px; /* Set a maximum width for the container */
+    margin: 0 auto; /* Center the container horizontally */
+}
+
+.live-search-container {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+#liveSearchInput {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+#liveSearchResults {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+}
+
+#liveSearchResults li {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+}
+
+#liveSearchResults li:last-child {
+    border-bottom: none;
+}
+
+#liveSearchResults li:hover {
+    background-color: #86db9f;
+}
+
     </style>
   <!-- ======= Header ======= -->
   <header id="header" class="fixed-top">
@@ -95,12 +141,22 @@
     <!-- ======= Breadcrumbs ======= -->
     <div class="breadcrumbs" data-aos="fade-in">
       <div class="container">
-        <h2>Tous les projets ( {{projet|length}} )</h2>
+        <h2>Tous les projets ({{ totalProjects|length }})</h2>
         <p>Vous pouvez trouvez tous les projets!</p>
 
 
       </div>
     </div><!-- End Breadcrumbs -->
+
+</br>
+
+    <div id="search-container">
+    <div class="live-search-container">
+        <input type="text" id="liveSearchInput" placeholder="Rechercher...">
+        <ul id="liveSearchResults"></ul>
+    </div>
+</div>
+
 
     <!-- ======= ALL Section ======= -->
     <section id="courses" class="courses">
@@ -153,5 +209,62 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+
+  <script>
+    $(document).ready(function () {
+        // Keep track of the original projects HTML
+        var originalProjectsHtml = $('#courses .row').html();
+
+        $('#liveSearchInput').on('input', function () {
+            var query = $(this).val();
+
+            // Make an Ajax request to the Symfony controller
+            $.ajax({
+                url: '/live-search',
+                method: 'GET',
+                data: { query: query },
+                success: function (data) {
+                    displayResults(data);
+                }
+            });
+        });
+
+        function displayResults(results) {
+            var projectsContainer = $('#courses .row');
+
+            if (results.length > 0) {
+                // If there are search results, replace the original projects with the search results
+                projectsContainer.html('');
+
+                $.each(results, function (index, result) {
+    console.log(result); // Log the entire result object
+
+    // Check if properties exist
+    var categorie = result.categorie !== undefined ? result.categorie : 'N/A';
+    var createdAt = result.createdAt !== undefined ? result.createdAt : 'N/A';
+
+    var resultHtml = '<div class="col-lg-4 col-md-6 d-flex align-items-stretch">' +
+                        '<div class="course-item">' +
+                            '<div class="course-content">' +
+                                '<div class="d-flex justify-content-between align-items-center mb-3">' +
+                                    '<h4>' + categorie + '</h4>' +
+                                '</div>' +
+                                '<h3><a href="' + result.url + '">' + result.title + '</a></h3>' +
+                                '<br/>' +
+                                '<p><b>Ajouté le :</b> ' + createdAt + '</p>' +
+                            '</div>' +
+                        '</div>' +
+                    '</div>';
+
+    projectsContainer.append(resultHtml);
+});
+            } else {
+                // If there are no search results, display a message and revert to the original projects HTML
+                projectsContainer.html('<p>Aucun résultat n\'est trouvé!</p>' + originalProjectsHtml);
+            }
+        }
+    });
+</script>
+
 
 {% endblock %}
