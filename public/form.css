@@ -18,6 +18,10 @@
     display: inline-block;
 }
 
+.btn-groups {
+    display: inline-block;
+}
+
 .btn-group form {
     margin-right: 5px; /* Espace entre les boutons */
 }
