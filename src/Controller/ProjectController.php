@@ -13,11 +13,13 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class ProjectController extends AbstractController
 {
@@ -143,26 +145,47 @@ public function showProject($id, ProjectRepository $repository, CondidatureRepos
         }
 
 
-            #[Route('/addCondidature/{id}', name: 'app_condidature', methods: ['GET','POST'])]
-            public function  AddCondidature ($id, EntityManagerInterface $em,Request $request, ProjectRepository $projectRepository)
-            {
-                $project= $projectRepository->find($id);
+    #[Route('/addCondidature/{id}', name: 'app_condidature', methods: ['GET','POST'])]
+    public function AddCondidature($id, EntityManagerInterface $em, Request $request, ProjectRepository $projectRepository)
+{
+    $project = $projectRepository->find($id);
 
-                $condidature=new Condidature();
-                $condidature->setProject($project);
-                $form =$this->CreateForm(CondidatureFormType::class,$condidature);
-                $form->handleRequest($request);
+    $condidature = new Condidature();
+    $condidature->setProject($project);
 
-                if ($form->isSubmitted() && $form->isValid())
-                {
-                    
-                    
-                    $em->persist($condidature);
-                    $em->flush();
-                    return $this->redirectToRoute('app_All');
-                }
-                return $this->render('projectTemp/addcondidature.html.twig',['f'=>$form->createView()]);
-            }
+    $form = $this->createForm(CondidatureFormType::class, $condidature);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        $lettremotivationFile = $form->get('lettremotivation')->getData();
+        $cvFile = $form->get('cv')->getData();
+
+        $lettremotivationFileName = $this->uploadFile($lettremotivationFile, 'lettres_directory');
+        $cvFileName = $this->uploadFile($cvFile, 'cv_directory');
+
+        $condidature->setLettremotivation($lettremotivationFileName);
+        $condidature->setCv($cvFileName);
+
+        $em->persist($condidature);
+        $em->flush();
+
+        return $this->redirectToRoute('app_All');
+    }
+
+    return $this->render('projectTemp/addcondidature.html.twig', ['f' => $form->createView()]);
+}
+
+private function uploadFile(UploadedFile $file, string $directory): string
+{
+    $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+    $file->move($this->getParameter($directory), $fileName);
+
+    return $fileName;
+}
+
+
+
+
 /*condidature afficher*/
 
         #[Route('/condidatures', name: 'app_Cond')]
@@ -173,20 +196,27 @@ public function showProject($id, ProjectRepository $repository, CondidatureRepos
             return $this->render('projectTemp/mescondi.html.twig',['condidature'=>$condidature, 'project'=>$project]);
         }
         #[Route('/editcond/{id}', name: 'app_editC')]
-    public function editCond(CondidatureRepository $repository, $id, Request $request,EntityManagerInterface $em)
-    {
-        $condidature = $repository->find($id);
-        $form = $this->createForm(CondidatureFormType::class, $condidature);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->flush(); // Correction : Utilisez la méthode flush() sur l'EntityManager pour enregistrer les modifications en base de données.
-            return $this->redirectToRoute('app_Cond');
+        public function editCond(CondidatureRepository $repository, $id, Request $request, EntityManagerInterface $em)
+        {
+            $condidature = $repository->find($id);
+        
+            if (!$condidature) {
+                throw $this->createNotFoundException('Condidature not found for id ' . $id);
+            }
+        
+            $form = $this->createForm(CondidatureFormType::class, $condidature);
+            $form->handleRequest($request);
+        
+            if ($form->isSubmitted() && $form->isValid()) {
+                $em->flush();
+        
+                return $this->redirectToRoute('app_Cond');
+            }
+        
+            return $this->render('projectTemp/editcond.html.twig', [
+                'f' => $form->createView(),
+            ]);
         }
-        return $this->render('projectTemp/editcond.html.twig', [
-            'f' => $form->createView(),
-        ]);
-    }
 #[Route('/deleteC/{id}', name: 'app_deleteCondidature')]
     public function deleteCOND($id, CondidatureRepository $repository,EntityManagerInterface $em)
     {

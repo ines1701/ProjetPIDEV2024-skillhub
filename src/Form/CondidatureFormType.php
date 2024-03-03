@@ -23,8 +23,14 @@ class CondidatureFormType extends AbstractType
             ->add('prenom')
             ->add('email')
             ->add('numTel')
-            ->add('lettremotivation', FileType::class, array('label' => 'Lettre de motivation'))
-            ->add('cv', FileType::class, array('label' => 'Curriculum vitae(CV)'))
+            ->add('lettremotivation', FileType::class, [
+                'label' => 'Lettre de motivation (PDF)',
+                'required' => false, // since we have a separate file field
+            ])
+            ->add('cv', FileType::class, [
+                'label' => 'Curriculum vitae (PDF)',
+                'required' => false, // since we have a separate file field
+            ])
             ->add("recaptcha", ReCaptchaType::class)
             ->add('Postuler',SubmitType::class);
     }

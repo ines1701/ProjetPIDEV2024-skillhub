@@ -9,6 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Project;
 use Symfony\Component\Validator\Constraints as Assert;
 use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber as AssertPhoneNumber;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\File;
 
 #[ORM\Entity(repositoryClass: CondidatureRepository::class)]
 class Condidature
@@ -55,15 +57,25 @@ class Condidature
      /**
      * @Assert\NotBlank(message="La lettre de motivation ne peut pas etre vide.")
      * )
+     * @Assert\File(
+     *     maxSize="5M",
+     *     mimeTypes={"application/pdf"},
+     *     mimeTypesMessage="Veuillez télécharger un fichier PDF valide."
+     * )
      */
-    private ?string $lettremotivation = null;
+    private $lettremotivation;
 
     #[ORM\Column(length: 255)]
     /**
      * @Assert\NotBlank(message="Le CV ne peut pas etre vide.")
      * )
+     * @Assert\File(
+     *     maxSize="5M",
+     *     mimeTypes={"application/pdf"},
+     *     mimeTypesMessage="Veuillez télécharger un fichier PDF valide."
+     * )
      */
-    private ?string $cv = null;
+    private $cv;
 
 
     #[ORM\ManyToOne(inversedBy: 'condidatures')]
@@ -142,7 +154,7 @@ class Condidature
         return $this->lettremotivation;
     }
 
-    public function setLettremotivation(string $lettremotivation): static
+    public function setLettremotivation(string $lettremotivation): self
     {
         $this->lettremotivation = $lettremotivation;
 
@@ -154,7 +166,7 @@ class Condidature
         return $this->cv;
     }
 
-    public function setCv(string $cv): static
+    public function setCv(string $cv): self
     {
         $this->cv = $cv;
 
