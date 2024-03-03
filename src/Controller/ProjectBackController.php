@@ -60,4 +60,14 @@ class ProjectBackController extends AbstractController
     $em->flush();
     return $this->redirectToRoute('app_AC');
     }
+
+    #[Route('/sortedByDate', name: 'app_sorted', methods:['get'])]
+    public function sorted(ProjectRepository $repository) :  Response
+    {
+        $projet = $repository->findByCreateDate();
+
+    return $this->render('condidate/tousp.html.twig',[
+        'projet' => $projet,
+    ]);
+    }
 }

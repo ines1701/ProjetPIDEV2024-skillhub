@@ -11,6 +11,10 @@
             <div class="card-body">
               <center><h5 class="card-title">Tous les  projets </h5></center>
 
+</br></br>
+<form action="{{path('app_sorted')}}" method ="get">
+<button type="submit" class="btn btn-secondary"> Filtrer par date </button>
+</div>
               <!-- Table with hoverable rows -->
               <table class="table table-hover">
                 <thead>
@@ -22,6 +26,7 @@
                     <th scope="col">Budget</th>
                     <th scope="col">Portée</th>
                     <th scope="col">Déscription</th>
+                    <th scope="col">Créé le</th>
                     <th scope="col">Actions</th>
                   </tr>
                 </thead>
@@ -34,6 +39,7 @@
                         <td> {{ p.periode }}</td>
                         <td> {{ p.budget }}</td>
                         <td> {{p.portee }}</td>
+                        <td> {{p.createdAT|date('Y-m-d') }}</td>
                         <td> {{p.description }}</td>
                         <td>
                             <a href="{{ path('app_deleteFA', {'id': p.id}) }}">Supprimer  </a>

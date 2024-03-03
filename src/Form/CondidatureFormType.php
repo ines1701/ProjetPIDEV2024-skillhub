@@ -25,10 +25,12 @@ class CondidatureFormType extends AbstractType
             ->add('numTel')
             ->add('lettremotivation', FileType::class, [
                 'label' => 'Lettre de motivation (PDF)',
+                'mapped'=>false,
                 'required' => false, // since we have a separate file field
             ])
             ->add('cv', FileType::class, [
                 'label' => 'Curriculum vitae (PDF)',
+                'mapped'=>false,
                 'required' => false, // since we have a separate file field
             ])
             ->add("recaptcha", ReCaptchaType::class)
