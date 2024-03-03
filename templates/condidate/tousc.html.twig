@@ -1,0 +1,55 @@
+{% extends 'baseback.html.twig' %}
+{% block body %}
+ <br/>
+ <br/>
+ <br/>
+ <main id="main" class="main">
+<section class="section">
+<div class="row">
+<div class="col-lg-12" >
+<div class="card">
+            <div class="card-body">
+              <center><h5 class="card-title">Toutes  les condidatures </h5></center>
+
+              <!-- Table with hoverable rows -->
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Prénom</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Numéro Tel</th>
+                    <th scope="col">Lettre de motivation</th>
+                    <th scope="col">Curriculum vittae</th>
+                    <th scope="col">ID du projet</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>  
+                    {% for c in condidature %} </tr>
+                        <td>{{ c.name }}</td>
+                        <td>{{ c.prenom }}</td>
+                        <td> {{ c.email }}</td>
+                        <td> {{ c.numTel }}</td>
+                        <td> {{ c.lettremotivation }}</td>
+                        <td> {{ c.cv }}</td>
+                        <td> {{ c.projectId }}</td>
+                        <td> {{ c.status }}</td>
+                        <td>
+                            <a href="{{ path('app_dC', {'id': c.id}) }}">Supprimer | </a>
+                            <a href="{{ path('app_dC', {'id': c.id}) }}">Accepter</a>
+                        </td>
+                </tbody> {% endfor %}
+              </table>
+              <!-- End Table with hoverable rows -->
+            </div>
+          </div>
+          </div>
+          </div>
+    
+    </section>
+          </main>
+{% endblock %}
+

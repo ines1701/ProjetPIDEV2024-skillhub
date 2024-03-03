@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<!-- ======= Breadcrumbs ======= -->
+    <div class="breadcrumbs" data-aos="fade-in">
+      <div class="container">
+        <h2>Modifier votre projet!</h2>
+      </div>
+    </div><!-- End Breadcrumbs -->
+<br/><br/>
+    <div class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1 content"> 
+    
+{{form(f)}}
+<a class="btn btn-success text-white" href="{{path('app_All')}}">Annuler</a>
+
+    </div>
+
+{% endblock %}

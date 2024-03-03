@@ -1,0 +1,30 @@
+<h1>HELLO</h1>
+<table border="1">
+    <tr>
+        <th>Nom</th>
+        <th>Prénom</th>
+        <th>Email</th>
+        <th>Niméro du téléphone</th>
+        <th>Lettre de motivation</th>
+        <th>Curriculum vitae (CV)</th>
+        <th>Actions</th>
+    </tr>
+
+    <tr>  {% for c in condidature %} </tr>
+    <td>{{ c.name }}</td>
+    <td>{{ c.prenom }}</td>
+    <td> {{ c.email }}</td>
+    <td> {{ c.numTel }}</td>
+    <td> {{ c.lettremotivation }}</td>
+    <td> {{ c.cv }}</td>
+    <td><a href="{{ path('app_edit', {'id': p.id }) }}">Editer</a>
+        <a href="{{ path('app_delete', {'id': p.id}) }}">Supprimer</a>
+        <a href="{{ path('app_dP', {'id': p.id}) }}">Détails</a>
+
+
+    </td>
+
+
+    {% endfor %}
+
+</table>

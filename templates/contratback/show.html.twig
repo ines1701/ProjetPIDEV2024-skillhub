@@ -42,7 +42,6 @@
                        datecontrat: {{ contrat.datecontrat ? contrat.dateContrat|date('Y-m-d') : '' }}
                        montant: {{ contrat.montant }}
                        description: {{ contrat.description }}
-                       image:  img src="{{ asset('uploads/' ~ contrat.image) }}" 
                    ">
                   <button type="submit" class="btn btn-primary btn-sm">Generate QR Code</button>
                </form>
