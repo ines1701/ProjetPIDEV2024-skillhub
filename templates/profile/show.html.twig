@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil{% endblock %}
+
+{% block body %}
+
+<head>
+    <meta charset="UTF-8">
+    <title>Votre titre ici</title>
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/stylep.css') }}">
+</head>
+    <h1>Overview Profil</h1>
+<table>
+    <tr>
+        <th>Profile Picture</th>
+        <td><img src="{{ user.profilePicture }}" alt="Profile Picture"></td>
+    </tr>
+    <tr>
+        <th>Nom d'utilisateur</th>
+        <td>{{ user.username }}</td>
+    </tr>
+    <tr>
+        <th>Prénom</th>
+        <td>{{ user.firstName }}</td>
+    </tr>
+    <tr>
+        <th>Nom de famille</th>
+        <td>{{ user.lastName }}</td>
+    </tr>
+    <tr>
+        <th>Email</th>
+        <td>{{ user.email }}</td>
+    </tr>
+    <tr>
+        <th>Skills</th>
+        <td>{{ user.skills }}</td>
+    </tr>
+    <tr>
+        <th>Experience</th>
+        <td>{{ user.experience }}</td>
+    </tr>
+</table>
+
+    {# Autres informations de profil à afficher #}
+
+   
+    <a href="{{ path('profile_edit') }}" class="edit-button">Edit</a>
+
+{% endblock %}

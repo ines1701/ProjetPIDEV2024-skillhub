@@ -38,7 +38,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $profilePicture;
 
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?string $skills;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?string $experience;
     public function getId(): ?int
     {
         return $this->id;
@@ -160,5 +167,41 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+    public function getProfilePicture(): ?string
+    {
+        return $this->profilePicture;
+    }
+
+    public function setProfilePicture(?string $profilePicture): self
+    {
+        $this->profilePicture = $profilePicture;
+
+        return $this;
+    }
+
+    public function getSkills(): ?string
+    {
+        return $this->skills;
+    }
+
+    public function setSkills(?string $skills): self
+    {
+        $this->skills = $skills;
+
+        return $this;
+    }
+
+    public function getExperience(): ?string
+    {
+        return $this->experience;
+    }
+
+    public function setExperience(?string $experience): self
+    {
+        $this->experience = $experience;
+
+        return $this;
+    }
+
     
 }

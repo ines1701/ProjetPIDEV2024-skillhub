@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reset your password{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('path/to/your/css/file.css') }}">
+{% endblock %}
+
+{% block body %}
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/stylenewpassword.css') }}">
+    <div class="container">
+        <h1 class="title">Reset your password</h1>
+
+        <div class="form-container">
+            {{ form_start(resetForm) }}
+                <div class="form-group">
+                    {{ form_row(resetForm.plainPassword) }}
+                </div>
+                <button class="btn btn-primary">Reset password</button>
+            {{ form_end(resetForm) }}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier le profil{% endblock %}
+
+{% block body %}
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/editProfile.css') }}">
+    <h1>Modifier le profil</h1>
+
+    {# Formulaire de modification du profil #}
+    <form method="POST" enctype="multipart/form-data">
+        {# Champs du formulaire pour les informations de profil #}
+        <div>
+            <label for="firstName">Prénom :</label>
+            <input type="text" id="firstName" name="firstName" value="{{ user.firstName }}" required>
+        </div>
+
+        <div>
+            <label for="lastName">Nom de famille :</label>
+            <input type="text" id="lastName" name="lastName" value="{{ user.lastName }}" required>
+        </div>
+
+        <div>
+            <label for="profilePicture">Photo de profil :</label>
+            <input type="file" id="profilePicture" name="profilePicture">
+        </div>
+
+        <div>
+            <label for="skills">Compétences :</label>
+            <textarea id="skills" name="skills">{{ user.skills }}</textarea>
+        </div>
+
+        <div>
+            <label for="experience">Expérience :</label>
+            <textarea id="experience" name="experience">{{ user.experience }}</textarea>
+        </div>
+
+        <button type="submit">Enregistrer les modifications</button>
+    </form>
+{% endblock %}

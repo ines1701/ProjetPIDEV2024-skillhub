@@ -1,0 +1,75 @@
+/* stylelogin.css */
+
+body {
+    background: white;
+  }
+  
+  .container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center; /* Centrer le contenu du conteneur */
+  }
+  
+  h1 {
+    color: green;
+    font-weight: bold;
+    font-size: 24px; /* Taille de police différente */
+    font-family: Arial, sans-serif; /* Police différente */
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+    color: green;
+    text-align: left; /* Aligner le texte à gauche */
+  }
+  
+  .input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    text-align: center; /* Centrer le texte dans les champs de texte */
+  }
+  
+  .btn-login {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background: green;
+    color: white;
+    text-align: center;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-top: 20px; /* Ajouter une marge en haut du bouton */
+    font-size: 16px; /* Taille de police du bouton */
+    font-weight: bold; /* Gras */
+  }
+  
+  .btn-login:hover {
+    background: darkgreen;
+  }
+  
+  .alert {
+    margin-bottom: 20px;
+    padding: 10px;
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 3px;
+    color: #721c24;
+  }
+  .mb-3 {
+    color: red;
+    font-weight: bold;
+  }
+  
+  .mb-3 a {
+    color: inherit;
+    font-weight: normal;
+  }

@@ -1,0 +1,47 @@
+body {
+  background-color: white;
+  color: black;
+  font-family: Arial, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.container {
+  text-align: center;
+}
+
+.text-container {
+  background-image: url("chemin/vers/votre/image-de-marbre.jpg");
+  border: 2px solid green;
+  padding: 20px;
+  margin: auto;
+  max-width: 600px;
+}
+
+.title {
+  color: black;
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 0;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.content {
+  color: black;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  text-align: left;
+}
+
+.content p {
+  margin-bottom: 10px;
+}
+
+.content a {
+  color: green;
+}
+
+/* Reste de votre code CSS ici */

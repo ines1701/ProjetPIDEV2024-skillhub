@@ -10,6 +10,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints\Choice;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class RegistrationFormType extends AbstractType
@@ -17,10 +21,43 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('firstName')
-            ->add('lastName')
-            ->add('email')
-            ->add('roles')
+        ->add('firstName', null, [
+            'constraints' => [
+                new NotBlank([
+                    'message' => 'Veuillez entrer votre prénom.',
+                ]),
+            ],
+        ])
+            ->add('lastName', null, [
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez entrer votre nom.',
+                    ]),
+                ],
+            ])
+            ->add('email', EmailType::class, [
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez entrer votre adresse e-mail.',
+                    ]),
+                    new Regex([
+                        'pattern' => '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/',
+                        'message' => 'Veuillez entrer une adresse e-mail valide.',
+                    ]),
+                ],
+            ])
+            ->add('roles', ChoiceType::class, [
+                'choices' => [
+                    'Freelance' => 'freelance',
+                    'User' => 'user',
+                ],
+                'constraints' => [
+                    new Choice([
+                        'choices' => ['freelance', 'user'],
+                        'message' => 'Le rôle doit être "freelance" ou "user".',
+                    ]),
+                ],
+            ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [
