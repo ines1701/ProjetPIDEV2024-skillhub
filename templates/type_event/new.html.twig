@@ -1,11 +1,22 @@
 {% extends 'base.html.twig' %}
 
+
+
+
 {% block title %}New TypeEvent{% endblock %}
 
-{% block body %}
-    <h1>Create new TypeEvent</h1>
+{% block content %}
 
+
+<br></br><br></br>
+
+
+    <h1>Create new TypeEvent</h1>
+   <link rel="stylesheet" href="{{ asset('/form.css') }}">
     {{ include('type_event/_form.html.twig') }}
 
+   <div style="text-align: center;">
     <a href="{{ path('app_type_event_index') }}">back to list</a>
+</div>
+
 {% endblock %}

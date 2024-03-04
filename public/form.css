@@ -18,6 +18,10 @@
     display: inline-block;
 }
 
+.btn-groups {
+    display: inline-block;
+}
+
 .btn-group form {
     margin-right: 5px; /* Espace entre les boutons */
 }
@@ -149,4 +153,33 @@ h1 {
     width: calc(33.33% - 20px);
     box-sizing: border-box;
     position: relative;
+}
+
+.content-containers {
+    margin: 50px; /* Vous pouvez ajuster la valeur de la marge selon vos besoins */
+}
+
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px; /* Pour ajouter un espace entre le champ et le message d'erreur */
+}
+
+.view-container {
+    display: inline-block;
+    background-color: #f8f9fa;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #007bff;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.view-label {
+    margin-right: 8px;
+}
+
+.view-value {
+    color: #28a745; /* Couleur verte pour la valeur */
 }

@@ -1,14 +1,57 @@
-
-{% block body %}
-
-{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'my-form-class'}}) }}
-
-
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-    
-{{ form_end(form) }}
- <button onclick="window.location.href='{{ path('app_event_index') }}'" class="btn custom-green">Back to Front</button>
-
+{% block stylesheets %}
+ 
+   <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 {% endblock %}
 
+{% block content %}
+
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'my-form-class'}}) }}
+
+    <div class="form-group">
+        {{ form_label(form.titre) }}
+        {{ form_widget(form.titre) }}
+        <span class="error-message">{{ form_errors(form.titre) }}</span>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.describ) }}
+        {{ form_widget(form.describ) }}
+        <span class="error-message">{{ form_errors(form.describ) }}</span>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.lieu) }}
+        {{ form_widget(form.lieu) }}
+        <span class="error-message">{{ form_errors(form.lieu) }}</span>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.date) }}
+        {{ form_widget(form.date) }}
+        <span class="error-message">{{ form_errors(form.date) }}</span>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.imageFile) }}
+        {{ form_widget(form.imageFile) }}
+        <span class="error-message">{{ form_errors(form.imageFile) }}</span>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.video) }}
+        {{ form_widget(form.video) }}
+        <span class="error-message">{{ form_errors(form.video) }}</span>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.type) }}
+        {{ form_widget(form.type) }}
+        <span class="error-message">{{ form_errors(form.type) }}</span>
+    </div>
+
+    <button class="btn">{{ button_label|default('Save') }}</button>
+    
+    {{ form_end(form) }}
+    <button onclick="window.location.href='{{ path('app_event_index') }}'" class="btn custom-green">Back to Front</button>
+    
+{% endblock %}

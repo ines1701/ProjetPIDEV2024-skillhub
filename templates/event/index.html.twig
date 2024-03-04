@@ -1,9 +1,9 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}LISTE DES EVENEMENTS{% endblock %}
 
 
-{% block body %}
+
+{% block content %}
+ <div class="content-containers">
+
     <h1>LISTE DES EVENEMENTS</h1>
     
 
@@ -16,7 +16,10 @@
                 <th>Lieu</th>
                 <th>Date</th>
                 <th>Image</th>
+                 <th>Vidéo</th>
                 <th>type</th>
+            
+             
                 <th>actions</th>
             </tr>
         </thead>
@@ -27,7 +30,6 @@
                 <td>{{ event.titre }}</td>
                 <td>{{ event.describ }}</td>
                 <td>{{ event.lieu }}</td>
-                
                 <td>{{ event.date ? event.date|date('Y-m-d H:i:s') : '' }}</td>
                                  <td>
                     {% if event.image %}
@@ -38,24 +40,45 @@
                 </td>
 
 
+               <td> {# Affichage de la vidéo #}
+                    {% if event.video %}
+                        <video controls style="max-width: 100px;">
+                            <source src="{{ asset('images/affiche/' ~ event.video) }}" type="video/mp4">
+                            <!-- Ajoutez d'autres formats vidéo pris en charge si nécessaire -->
+                        </video>
+                    {% else %}
+                        No Video
+                    {% endif %}
+                </td>
+
+
+ 
+
                  <td>{{ event.type }}</td>
 
-
+ 
                       <td>
                     <div class="btn-group" role="group" aria-label="Actions">
                         <form method="post" action="{{ path('app_event_edit', {'id': event.id}) }}" style="display: inline;">
                            <button type="submit" class="btn btn-primary btn-edit">Edit</button>
                         </form>
+                        <br></br>
                         {% include 'event/_delete_form.html.twig' with { 'id': event.id }  %}
+<br></br>
+                          <div>
+                    <a href="{{ path('app_event_show', {'id': event.id}) }}" class="btn btn-primary">Inscriptions</a>
+                </div>
                     </div>
+                    </td>
+
+                   
             </tr>
         {% else %}
             <tr>
                 <td colspan="7">no records found</td>
             </tr>
         {% endfor %}
-        
         </tbody>
     </table>
-  
+  </div>
 {% endblock %}

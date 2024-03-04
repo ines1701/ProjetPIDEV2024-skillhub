@@ -2,7 +2,10 @@
 
 namespace App\Entity;
 
+
 use App\Repository\EventRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -17,20 +20,45 @@ class Event
     #[ORM\Column]
     private ?int $id = null;
 
-
-       /**
-     * @Assert\NotBlank(message="Le titre ne peut pas être vide.")
+ /**
+     * @Assert\NotBlank(message=" Le titre ne peut pas etre vide.")
+     * @Assert\Length(
+     *          min = 5,
+     *          minMessage = "Le titre doit avoir minimum 5 caractères."
+     * )
      */
-    #[ORM\Column(length: 255)]
-  
-    private ?string $titre = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $titre = null;
+ /**
+     * @Assert\NotBlank(message=" La description ne peut pas etre vide.")
+     * @Assert\Length(
+     *          min = 25,
+     *          minMessage = "La description doit avoir minimum 25 caractères."
+     * )
+     */
     #[ORM\Column(length: 255)]
     private ?string $describ = null;
 
+ /**
+     * @Assert\NotBlank(message=" Le lieu ne peut pas etre vide.")
+     * @Assert\Length(
+     *          min = 5,
+     *          minMessage = "Le lieu doit avoir minimum 5 caractères."
+     * )
+     */
     #[ORM\Column(length: 255)]
     private ?string $lieu = null;
 
+
+
+     /**
+    
+     * @Assert\GreaterThanOrEqual(
+     *      "today",
+     *      message="La date doit être égale ou postérieure à aujourd'hui."
+     * )
+     */
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date = null;
 
@@ -42,20 +70,26 @@ class Event
      */
     private $imageFile;
 
+    #[ORM\Column(length: 255)]
+    private ?string $video = null;
 
 
     #[ORM\ManyToOne(inversedBy: 'events')]
     #[ORM\JoinColumn(nullable: false)]
     private ?TypeEvent $type = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $latitude = null;
+    #[ORM\Column(nullable: true)]
+    private ?int $view = 0;
 
-    #[ORM\Column(length: 255)]
-    private ?string $longitude = null;
+    #[ORM\OneToMany(mappedBy: 'event', targetEntity: Inscrip::class)]
+    private Collection $inscription;
 
+    public function __construct()
+    {
+        $this->inscription = new ArrayCollection();
+    }
 
-
+   
 
 
     public function getId(): ?int
@@ -149,35 +183,68 @@ class Event
         return $this;
     }
 
-    public function getLatitude(): ?string
+    public function getVideo(): ?string
     {
-        return $this->latitude;
+        return $this->video;
     }
 
-    public function setLatitude(string $latitude): static
+    public function setVideo(string $video): static
     {
-        $this->latitude = $latitude;
+        $this->video = $video;
 
         return $this;
     }
 
-    public function getLongitude(): ?string
+    public function getView(): ?int
     {
-        return $this->longitude;
+        return $this->view;
     }
 
-    public function setLongitude(string $longitude): static
+    public function setView(?int $view): static
     {
-        $this->longitude = $longitude;
+        $this->view = $view;
 
         return $this;
     }
 
-    public function __toString(){
+    public function incrementViews(): self
+    {
+        $this->view++;
 
-        return $this->Latitude;
-        return $this->Longitude;
+        return $this;
     }
 
-    
+    /**
+     * @return Collection<int, Inscrip>
+     */
+    public function getInscription(): Collection
+    {
+        return $this->inscription;
+    }
+
+    public function addInscription(Inscrip $inscription): static
+    {
+        if (!$this->inscription->contains($inscription)) {
+            $this->inscription->add($inscription);
+            $inscription->setEvent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInscription(Inscrip $inscription): static
+    {
+        if ($this->inscription->removeElement($inscription)) {
+            // set the owning side to null (unless already changed)
+            if ($inscription->getEvent() === $this) {
+                $inscription->setEvent(null);
+            }
+        }
+
+        return $this;
+    }
+   
+ 
+  
+
 }

@@ -21,6 +21,22 @@ class EventRepository extends ServiceEntityRepository
         parent::__construct($registry, Event::class);
     }
 
+
+
+    public function searchByCriteria(?string $searchQuery)
+    {
+        $queryBuilder = $this->createQueryBuilder('g');
+
+        if (!empty($searchQuery)) {
+            $queryBuilder->andWhere('g.titre LIKE :searchQuery OR g.describ LIKE :searchQuery')
+                ->setParameter('searchQuery', '%' . $searchQuery . '%');
+        }
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    
+
 //    /**
 //     * @return Event[] Returns an array of Event objects
 //     */
@@ -45,4 +61,5 @@ class EventRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
 }

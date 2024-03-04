@@ -1,21 +1,112 @@
-{% extends 'base.html.twig' %}
+{# main_template.twig #}
+{% extends 'baseF.html.twig' %}
+
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('/form.css') }}">
+   <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+   <link rel="stylesheet" href="{{ asset('/form.css') }}">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        @keyframes gradientChange {
+            0% { background: linear-gradient(to right, #ffcccc, #cc99ff); }
+            50% { background: linear-gradient(to right, #cc99ff, #ffcccc); }
+            100% { background: linear-gradient(to right, #ffcccc, #cc99ff); }
+        }
+
+        body {
+            animation: gradientChange 3s infinite;
+        }
+ 
+
+ .pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination-container .page-item {
+    margin: 0 5px;
+}
+
+.pagination-container .page-link {
+    padding: 15px 20px; /* Augmentez la taille du padding pour rendre les boutons plus grands */
+    border: 1px solid #ddd;
+    background-color: #fff;
+    color: #333;
+    border-radius: 5px; /* Ajoutez une bordure arrondie */
+}
+
+.pagination-container .page-link:hover {
+    background-color: #f5f5f5;
+}
+
+.pagination-container .page-item.active .page-link {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+ .button-container {
+            display: flex;
+            justify-content: center; /* Centrer horizontalement */
+            align-items: center; /* Centrer verticalement */
+           
+        }
+         .search-input {
+            width: 400px; /* Définir la largeur personnalisée selon vos besoins */
+        }
+
+          .container-search {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+        }
+
+    </style>
+   
 {% endblock %}
+
 
 {% block title %}LISTE DES EVENEMENTS{% endblock %}
 
 {% block body %}
+    <br></br>
+    <br></br>
 
 
-
+  
     <div style="text-align: center; padding: 40px;">
-        <h1>Les événements disponibles</h1>
+        <h1 style="color: white; text-shadow: 2px 2px 4px rgba(255,255,255,0.7);">Les événements disponibles</h1>
     </div>
+
+   <div class="button-container">
+        <button onclick="window.location.href='{{ path('events')}}'" class="btn custom-green">Voir le calendrier des évènements</button>
+    </div>
+
+<br></br>
+
+  <div class="container-search">
+        <div class="search-form">
+            <form action="{{ path('app_event_index') }}" method="get" class="form-inline">
+                <div class="form-group mr-2">
+                    <input type="text" class="form-control search-input" name="search" placeholder="Chercher par titre ou description">
+                </div>
+                <br>
+                <div class="button-container">
+                <button type="submit" class="btn custom-green">Chercher</button>
+                 </div>
+
+            </form>
+        </div>
+    </div>
+
+  
+
     <div style="text-align: center; padding: 40px;">
         {% set groupSize = 3 %}
+       
         {% for i in 0..(events|length-1)//groupSize %}
             <div class="event-group">
                 {% for j in 0..groupSize-1 %}
@@ -23,23 +114,34 @@
                     {% if index < events|length %}
                         <div class="event-box">
                             <img src="{{ asset('images/affiche/' ~ events[index].image) }}" alt="Event Image" class="event-image" style="display: block; margin: 0 auto; max-width: 400px; height: auto;">
-                           <h2 style="font-size: 35px; font-weight: bold; color: #333;">{{ events[index].titre }}</h2>
-                            
-                              
-
-                            <p style="font-size: 25px;">{{ events[index].describ }}</p>
+                            <h2 style="font-size: 35px; font-weight: bold; color: #333; text-shadow: 2px 2px 4px rgba(255,255,255,0.7);">{{ events[index].titre }}</h2>
+                            <p style="font-size: 25px; word-break: break-word;">{{ events[index].describ }}</p>
                             <p style="font-size: 18px;">Lieu: {{ events[index].lieu }}</p>
                             <p>Date: {{ events[index].date ? events[index].date|date('Y-m-d H:i:s') : '' }}</p>
-                             <p style="font-size: 18px;">type: {{ events[index].type }}</p>
-
-
-
-
+                            <p style="font-size: 18px;">Type: {{ events[index].type }}</p>
+                            
+                            <button onclick="window.location.href='{{ path('app_event_details', {'id': events[index].id})}}'" class="btn custom-green">voir plus</button>
                         </div>
                     {% endif %}
                 {% endfor %}
-              
+                 
             </div>
         {% endfor %}
-        
+  
+
+     </div>
+
+      <div class="pagination-container">
+        {{ knp_pagination_render(events) }}
+    </div>
+
+
+
+
+ 
 {% endblock %}
+
+
+
+
+

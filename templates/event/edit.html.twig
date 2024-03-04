@@ -2,8 +2,10 @@
 
 {% block title %}Edit Event{% endblock %}
 
-{% block body %}
-    <h1>Edit Event</h1>
+{% block content %}
+<br></br><br></br>
+<link rel="stylesheet" href="{{ asset('/form.css') }}">
+    <h1>Editer Evenement</h1>
 
     {{ include('event/_form.html.twig', {'button_label': 'Update'}) }}
   
